@@ -1,9 +1,14 @@
-﻿<Application x:Class="MusicPlayer_GG.App"
+﻿<!--
+ Copyright (c) <2018> ICRL
+
+ See the file license.txt for copying permission.
+ -->
+<Application x:Class="MusicPlayer_GG.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:MusicPlayer_GG"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        
+
     </Application.Resources>
 </Application>

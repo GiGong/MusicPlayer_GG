@@ -4,6 +4,11 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Media.Imaging;
 
+/*
+Copyright (c) <2018> ICRL
+
+See the file license.txt for copying permission.
+*/
 namespace MusicPlayer_GG
 {
     [DataContract]

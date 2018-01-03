@@ -16,13 +16,22 @@ using System.ComponentModel;
 using System.Windows.Threading;
 using System.Runtime.Serialization.Json;
 
+/*
+Copyright (c) <2018> ICRL
+
+See the file license.txt for copying permission.
+ */
 namespace MusicPlayer_GG
 {
     /// <summary>
-    /// 2017.12.22 18:33 레포지토리 변경내용 확인
+    /// MainWindow for Music Player
+    /// made by Gigong
+    /// email : gigong222@gmail.com
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        #region ----Variables----
+
         DispatcherTimer _timer = new DispatcherTimer();
         string _maxTime;
         TimeSpan _maxTimeSpan;
@@ -30,6 +39,9 @@ namespace MusicPlayer_GG
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion
+
+        #region ----Property----
 
         public bool IsShuffle
         {
@@ -73,6 +85,8 @@ namespace MusicPlayer_GG
                 _maxTimeSpan = value;
             }
         }
+
+        #endregion
 
         public MainWindow()
         {
@@ -151,11 +165,6 @@ namespace MusicPlayer_GG
                 case Key.Left:
                     sdrPlay_ValueChanged(-5);
                     break;
-#if DEBUG
-                default:
-
-                    break;
-#endif
             }
         }
 
@@ -166,25 +175,8 @@ namespace MusicPlayer_GG
             else
                 Volume -= 2;
         }
-
-
-        /// <summary>
-        /// Eventhandler For Test
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Event_Test(object sender, EventArgs e)
-        {
-            if (sender is MenuItem)
-            {
-                var item = sender as MenuItem;
-
-                if (item.InputGestureText == "Up")
-                    Volume += 2;
-            }
-        }
-
-        #region Event for Change
+        
+        #region ----Event for Change----
 
         private void Music_Opened(object sender, EventArgs e)
         {
@@ -228,7 +220,7 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region Event for Music
+        #region ----Event for Music----
 
         private void Event_Play(object sender, RoutedEventArgs e)
         {
@@ -257,7 +249,7 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region Event for File
+        #region ----Event for File----
 
         private void Event_Add(object sender, RoutedEventArgs e)
         {
@@ -272,7 +264,7 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region Event for PlayList
+        #region ----Event for PlayList----
 
         private void Event_PlayListNew(object sender, RoutedEventArgs e)
         {
@@ -295,7 +287,7 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region Event for listPlay
+        #region ----Event for listPlay----
 
         private void listPlay_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -343,7 +335,7 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region Event Context
+        #region ----Event Context----
 
         private void Event_ContextPlay(object sender, RoutedEventArgs e)
         {
@@ -359,7 +351,7 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region Event for sdrPlay
+        #region ----Event for sdrPlay----
 
         private void sdrPlay_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -416,7 +408,7 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region Drag and Drop
+        #region ----Drag and Drop----
 
         private void listPlay_DragOver(object sender, DragEventArgs e)
         {
@@ -471,5 +463,26 @@ namespace MusicPlayer_GG
 
         #endregion
 
+        #region Test
+
+        /*
+        /// <summary>
+        /// Eventhandler For Test
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Event_Test(object sender, EventArgs e)
+        {
+            if (sender is MenuItem)
+            {
+                var item = sender as MenuItem;
+
+                if (item.InputGestureText == "Up")
+                    Volume += 2;
+            }
+        }
+        */
+
+        #endregion
     }
 }

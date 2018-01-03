@@ -10,10 +10,17 @@ using System.Windows.Media;
 using System.Runtime.Serialization.Json;
 using System.Windows.Media.Imaging;
 
+/*
+Copyright (c) <2018> ICRL
+
+See the file license.txt for copying permission.
+*/
 namespace MusicPlayer_GG
 {
     static class Player
     {
+        #region Variables
+
         static MediaPlayer media = new MediaPlayer();
         static List<MediaElement> _list = new List<MediaElement>();
         static Random rand = new Random((int)DateTime.Now.Ticks);
@@ -26,6 +33,8 @@ namespace MusicPlayer_GG
 
         public static EventHandler //Ended, // Played
                                     Played, Stoped, Paused, Changed;
+
+        #endregion
 
         #region Property
 
