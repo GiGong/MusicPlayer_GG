@@ -11,6 +11,7 @@
         xmlns:local="clr-namespace:MusicPlayer_GG"
         mc:Ignorable="d"
         Title="MusiG Player" Height="600" Width="450" MinWidth="450"
+        Icon="G.ico"
         Loaded="Window_Loaded" KeyDown="Window_KeyDown"
         FontFamily="Fonts/#NanumGothic">
     <Grid>
