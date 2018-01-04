@@ -130,9 +130,13 @@ namespace MusicPlayer_GG
         {
             switch (e.Key)
             {
+                /*
                 case Key.F1:
                     // Show_Help();
                     break;
+                    */
+
+                #region Media
 
                 case Key.Space:
                     Player.MediaPause();
@@ -150,6 +154,10 @@ namespace MusicPlayer_GG
                     Player.MediaNext();
                     break;
 
+                #endregion
+
+                #region Volume
+                    
                 case Key.Up:
                     Volume += 2;
                     break;
@@ -157,6 +165,8 @@ namespace MusicPlayer_GG
                 case Key.Down:
                     Volume -= 2;
                     break;
+
+                #endregion
 
                 case Key.Right:
                     sdrPlay_ValueChanged(5);
@@ -168,6 +178,16 @@ namespace MusicPlayer_GG
             }
         }
 
+        private void Information_Click(object sender, RoutedEventArgs e)
+        {
+            InformationWindow informationWindow = new InformationWindow();
+
+            informationWindow.Top = this.Top + (this.ActualHeight - informationWindow.Height) / 2;
+            informationWindow.Left = this.Left + (this.ActualWidth - informationWindow.Width) / 2;
+
+            informationWindow.ShowDialog();
+        }
+
         private void sdrVol_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e.Delta > 0)
@@ -175,7 +195,7 @@ namespace MusicPlayer_GG
             else
                 Volume -= 2;
         }
-        
+
         #region ----Event for Change----
 
         private void Music_Opened(object sender, EventArgs e)
@@ -465,6 +485,11 @@ namespace MusicPlayer_GG
 
         #region Test
 
+        private void Test_Help(object sender, EventArgs e)
+        {
+            MessageBox.Show("help message");
+        }
+
         /*
         /// <summary>
         /// Eventhandler For Test
@@ -484,5 +509,6 @@ namespace MusicPlayer_GG
         */
 
         #endregion
+
     }
 }

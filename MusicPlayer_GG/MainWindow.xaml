@@ -10,7 +10,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicPlayer_GG"
         mc:Ignorable="d"
-        Title="MusiG Player" Height="600" Width="450" MinWidth="450"
+        Title="MusicPlayer_GG" Height="600" Width="450" MinWidth="450"
         Icon="G.ico"
         Loaded="Window_Loaded" KeyDown="Window_KeyDown"
         FontFamily="Fonts/#NanumGothic">
@@ -21,7 +21,6 @@
                     <MenuItem Header="추가" Click="Event_Add" InputGestureText="Insert"/>
                     <MenuItem Header="제거" Click="Event_Delete" InputGestureText="Delete"/>
                     <Separator />
-                    <MenuItem Header="도움말" InputGestureText="F1" IsEnabled="False" />
                     <MenuItem Header="종료" Click="Event_Exit" InputGestureText="Alt + F4" />
                 </MenuItem>
                 <MenuItem Header="음악" >
@@ -35,6 +34,11 @@
                     <MenuItem Header="새로 만들기" Click="Event_PlayListNew"/>
                     <MenuItem Header="저장" Click="Event_PlayListSave"/>
                     <MenuItem Header="불러오기" Click="Event_PlayListLoad"/>
+                </MenuItem>
+                <MenuItem Header="지원" >
+                    <MenuItem Header="도움말" InputGestureText="F1" IsEnabled="False"/>
+                    <Separator />
+                    <MenuItem Header="MusicPlayer_GG 정보" Click="Information_Click"/>
                 </MenuItem>
             </Menu>
         </DockPanel>

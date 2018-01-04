@@ -1,0 +1,45 @@
+﻿<!--
+ Copyright (c) <2018> ICRL
+
+ See the file license.txt for copying permission.
+ -->
+<Window x:Class="MusicPlayer_GG.InformationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusicPlayer_GG"
+        mc:Ignorable="d"
+        Title="정보" Height="450" Width="350" ResizeMode="NoResize"
+        Icon="G.ico" FontFamily="Fonts/#NanumGothic"
+        Loaded="Window_Loaded">
+    <Grid Background="WhiteSmoke">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Image Source="Resources\Gigong.png" Height="100" VerticalAlignment="Top" Width="100" Margin="0,40,0,0" Grid.Column="1"/>
+
+        <TextBlock x:Name="textCopyright" TextAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="82,180,0,0" Width="180"/>
+
+        <TextBlock x:Name="textVersion" TextAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Text="현재 버전 : v1.2.3" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="82,255,0,0" Width="180"/>
+
+        <TextBlock FontSize="13" Width="180" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="82,310,0,0" Grid.ColumnSpan="3">
+            <Run Text="메일 : "/>
+            <Hyperlink Click="Event_Mail">
+                <Run Text="gigong222@gmail.com" Foreground="Black"/>
+            </Hyperlink>
+        </TextBlock>
+        <TextBlock FontSize="13" Width="180" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="82,330,0,0" Grid.ColumnSpan="3">
+            <Run Text="블로그 : "/>
+            <Hyperlink Click="Event_Blog">
+                <Run Text="gigong.cf" Foreground="Black"/>
+            </Hyperlink>
+        </TextBlock>
+
+        <Button Content="확인" HorizontalAlignment="Left" VerticalAlignment="Top" Width="70" Height="20" Margin="15,375,0,0" Grid.Column="1" Click="Event_OK" IsDefault="True"/>
+
+    </Grid>
+</Window>
