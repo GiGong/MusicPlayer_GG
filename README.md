@@ -18,7 +18,7 @@ Target Framework Version : .NET Framework 4.6
 
 *** 
 
-## Connect
+## Contact
 Blog : <a href="http://gigong.cf" target="_blank">GiGong Blog</a>
 
 Email : <gigong222@gmail.com>
