@@ -32,6 +32,9 @@ namespace MusicPlayer_GG
     {
         #region ----Variables----
 
+        /// <summary>
+        /// 재생 시간이 지남에 따라 정보를 업데이트 시켜줄 Timer
+        /// </summary>
         DispatcherTimer _timer = new DispatcherTimer();
         string _maxTime;
         TimeSpan _maxTimeSpan;
@@ -43,6 +46,9 @@ namespace MusicPlayer_GG
 
         #region ----Property----
 
+        /// <summary>
+        /// 임의 재생 할 것인가
+        /// </summary>
         public bool IsShuffle
         {
             get { return Player.isShuffle; }
@@ -53,6 +59,9 @@ namespace MusicPlayer_GG
             }
         }
 
+        /// <summary>
+        /// 한곡 반복을 할 것인가
+        /// </summary>
         public bool IsRepeatOnce
         {
             get { return Player.isRepeatOne; }
@@ -63,6 +72,11 @@ namespace MusicPlayer_GG
             }
         }
 
+        /// <summary>
+        /// Volume값
+        /// double을 int형으로 변환
+        /// floating point 에러 없도록 처리
+        /// </summary>
         public int Volume
         {
             get { return (int)Math.Round(Player.Volume * 100); }
@@ -74,6 +88,10 @@ namespace MusicPlayer_GG
             }
         }
 
+        /// <summary>
+        /// 음악의 총 재생 시간 관련 작업
+        /// string형 변환, slider 값 갱신
+        /// </summary>
         public TimeSpan MaxTime
         {
             get { return _maxTimeSpan; }
@@ -93,44 +111,72 @@ namespace MusicPlayer_GG
             InitializeComponent();
         }
 
+        /// <summary>
+        /// MainWindow 첫 로드시, 관련 작업
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // Timer 설정
             _timer.Interval = TimeSpan.FromMilliseconds(500);
             _timer.Tick += _timer_Tick;
 
+            // Player 클래스에 Event 등록
             Player.Changed += (s, e1) => { listPlay.Items.Refresh(); };
             Player.Played += Music_Played;
             Player.Stoped += Music_Stoped;
             Player.Paused += Music_Paused;
 
+            // Player 클래스 초기화
             Player.Initiate(Music_Opened);
 
+            // Volume Slider에 마우스 관련 이벤트 추가
             sdrVol.MouseEnter += (s, e1) => { lblVol.Content = Volume + " %"; };
             sdrVol.MouseLeave += (s, e1) => { lblVol.Content = ""; };
 
+            // 프로그램 종료 시 Player에도 종료 이벤트
+            // 모두 닫기 전 Player를 먼저 정리
             this.Closed += Player.Event_Closed;
 
+            // Data Binding
             this.DataContext = this;
 
+            // Player Load (설정, 재생목록 Load)
             Player.Event_Loaded(sender, e);
+
+            // Load한 값 설정
             listPlay.ItemsSource = Player.PlayList;
             listPlay.SelectedIndex = Player.PlayingIndex;
             sdrVol.Value = Volume;
         }
 
+        /// <summary>
+        /// Timer의 주기마다 현재 재생 시간을 업데이트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _timer_Tick(object sender, EventArgs e)
         {
+            // Label에 보이는 컨텐츠 업데이트
             lblTime.Content = Player.Position.ToString(@"mm\ \:\ ss") + " / " + _maxTime;
 
+            // 마우스로 탐색 Slider를 누르지 않을 경우
+            // Slider의 값 업데이트
             if (isDown == false)
                 sdrPlay.Value = (int)Player.Position.TotalSeconds;
         }
 
+        /// <summary>
+        /// 단축키를 입력 받음
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
-                /*
+                /* Command로 대체
                 case Key.F1:
                     // Show_Help();
                     break;
@@ -168,27 +214,43 @@ namespace MusicPlayer_GG
 
                 #endregion
 
+                #region Play Time
+
                 case Key.Right:
-                    sdrPlay_ValueChanged(5);
+                    SdrPlay_ValueChanged(5);
                     break;
 
                 case Key.Left:
-                    sdrPlay_ValueChanged(-5);
+                    SdrPlay_ValueChanged(-5);
                     break;
+
+                    #endregion
             }
         }
 
+        /// <summary>
+        /// 프로그램 정보 윈도우 호출
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Information_Click(object sender, RoutedEventArgs e)
         {
             InformationWindow informationWindow = new InformationWindow();
 
+            // 새 윈도우를 현재 윈도우의 중앙에 위치하도록 Top, Left 조정
             informationWindow.Top = this.Top + (this.ActualHeight - informationWindow.Height) / 2;
             informationWindow.Left = this.Left + (this.ActualWidth - informationWindow.Width) / 2;
 
+            // Dialog 형식으로 호출
             informationWindow.ShowDialog();
         }
 
-        private void sdrVol_MouseWheel(object sender, MouseWheelEventArgs e)
+        /// <summary>
+        /// 마우스 휠로 볼륨 조절 가능
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SdrVol_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e.Delta > 0)
                 Volume += 2;
@@ -196,26 +258,60 @@ namespace MusicPlayer_GG
                 Volume -= 2;
         }
 
+        /// <summary>
+        /// 프로그램 종료를 원할 때 Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Event_Exit(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         #region ----Event for Change----
 
+        /// <summary>
+        /// 음악이 열렸을 때 Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Music_Opened(object sender, EventArgs e)
         {
+            // 총 재생 시간 업데이트
             MaxTime = Player.TotalPlayTime;
         }
 
+        /// <summary>
+        /// 음악이 시작될 때 Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Music_Played(object sender, EventArgs e)
         {
+            // 음악 제목, 음악 정보 업데이트
             lblTitle.Content = Player.NowTitle;
             lblMusic.Content = Player.NowPlaying;
 
+            // 앨범아트를 읽어들였다면 업데이트
             if (Player.NowAlbumArt != null)
                 imgArt.Source = Player.NowAlbumArt;
 
-            MaxTime = Player.TotalPlayTime;
+            // Stop -> Play시에 총 재생 시간 업데이트
+            // 의미 없음
+            // MaxTime = Player.TotalPlayTime;
+
+            // Playlist에 선택된 Item 변경
             listPlay.SelectedIndex = Player.PlayingIndex;
+
+            // 타이머 시작
             _timer.Start();
         }
 
+        /// <summary>
+        /// 음악이 Stop(or 종료)되었을 때 Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Music_Stoped(object sender, EventArgs e)
         {
             _timer.Stop();
@@ -228,14 +324,14 @@ namespace MusicPlayer_GG
             lblTime.Content = "";
         }
 
+        /// <summary>
+        /// 음악이 일시정지 되었을 때 Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Music_Paused(object sender, EventArgs e)
         {
             _timer.Stop();
-        }
-
-        private void Event_Exit(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
 
         #endregion
@@ -244,7 +340,8 @@ namespace MusicPlayer_GG
 
         private void Event_Play(object sender, RoutedEventArgs e)
         {
-            Player.MediaPlay();
+            if (listPlay.SelectedIndex > -1)
+                Player.MediaSelectPlay(listPlay.SelectedIndex);
         }
 
         private void Event_Stop(object sender, RoutedEventArgs e)
@@ -309,7 +406,7 @@ namespace MusicPlayer_GG
 
         #region ----Event for listPlay----
 
-        private void listPlay_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void ListPlay_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
@@ -327,7 +424,7 @@ namespace MusicPlayer_GG
             }
         }
 
-        private void listPlay_KeyDown(object sender, KeyEventArgs e)
+        private void ListPlay_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
@@ -347,7 +444,7 @@ namespace MusicPlayer_GG
             }
         }
 
-        private void listPlay_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ListPlay_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (listPlay.SelectedIndex > -1)
                 Player.MediaSelectPlay(listPlay.SelectedIndex);
@@ -373,7 +470,7 @@ namespace MusicPlayer_GG
 
         #region ----Event for sdrPlay----
 
-        private void sdrPlay_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void SdrPlay_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (Player.IsOpened == false)
             {
@@ -384,7 +481,7 @@ namespace MusicPlayer_GG
             isDown = true;
         }
 
-        private void sdrPlay_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void SdrPlay_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (Player.IsOpened == false)
             {
@@ -392,11 +489,11 @@ namespace MusicPlayer_GG
                 return;
             }
 
-            sdrPlay_ValueChanged();
+            SdrPlay_ValueChanged();
             isDown = false;
         }
 
-        private void sdrPlay_ValueChanged(int i = 0)
+        private void SdrPlay_ValueChanged(int i = 0)
         {
             if (Player.IsOpened == false)
             {
@@ -418,19 +515,19 @@ namespace MusicPlayer_GG
                 sdrPlay.Value = value;
         }
 
-        private void sdrPlay_MouseWheel(object sender, MouseWheelEventArgs e)
+        private void SdrPlay_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e.Delta > 0)
-                sdrPlay_ValueChanged(5);
+                SdrPlay_ValueChanged(5);
             else
-                sdrPlay_ValueChanged(-5);
+                SdrPlay_ValueChanged(-5);
         }
 
         #endregion
 
         #region ----Drag and Drop----
 
-        private void listPlay_DragOver(object sender, DragEventArgs e)
+        private void ListPlay_DragOver(object sender, DragEventArgs e)
         {
             bool dropEnabled = true;
             if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
@@ -459,7 +556,7 @@ namespace MusicPlayer_GG
             }
         }
 
-        private void listPlay_Drop(object sender, DragEventArgs e)
+        private void ListPlay_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {

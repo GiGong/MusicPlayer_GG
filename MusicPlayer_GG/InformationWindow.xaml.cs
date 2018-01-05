@@ -34,7 +34,7 @@ namespace MusicPlayer_GG
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             textVersion.Text = "현재 버전 : " + "v" + version.Major + "." + version.Minor + "." + version.Build;
 
-            textCopyright.Text = "Copyright © 2018 GiGong.\nAll Rights Reserved.";
+            // textCopyright.Text = "Copyright © 2018 GiGong.\nAll Rights Reserved.";
         }
 
         private void Event_OK(object sender, RoutedEventArgs e)

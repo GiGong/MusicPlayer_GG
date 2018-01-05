@@ -53,16 +53,16 @@
         <Label x:Name="lblMusic" FontSize="12" FontWeight="Bold" VerticalAlignment="Top" Margin="140,85,20,0"/>
 
         <Slider x:Name="sdrPlay" Value="0" Minimum="0"  Height="20" VerticalAlignment="Top" Margin="20,200,20,0" Focusable="False"
-                PreviewMouseLeftButtonDown="sdrPlay_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="sdrPlay_PreviewMouseLeftButtonUp" MouseWheel="sdrPlay_MouseWheel"/>
+                PreviewMouseLeftButtonDown="SdrPlay_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="SdrPlay_PreviewMouseLeftButtonUp" MouseWheel="SdrPlay_MouseWheel"/>
         <Slider x:Name="sdrVol" Minimum="0" Maximum="100" Value="{Binding Volume, Mode=TwoWay}" IsSnapToTickEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,165,0,0" Width="100" Focusable="False"
-                MouseWheel="sdrVol_MouseWheel"/>
+                MouseWheel="SdrVol_MouseWheel"/>
 
         <CheckBox x:Name="cbxShuffle" IsChecked="{Binding IsShuffle}" Content="임의 재생" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,155,20,0"/>
         <CheckBox x:Name="cbsRepeatOne" IsChecked="{Binding IsRepeatOnce}" Content="한곡 반복" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,172,20,0"/>
 
 
         <ListBox x:Name="listPlay" Margin="20,240,20,20" SelectionMode="Extended" AllowDrop="True" 
-                 MouseDoubleClick="listPlay_MouseDoubleClick" KeyDown="listPlay_KeyDown" PreviewKeyDown="listPlay_PreviewKeyDown" DragOver="listPlay_DragOver" Drop="listPlay_Drop">
+                 MouseDoubleClick="ListPlay_MouseDoubleClick" KeyDown="ListPlay_KeyDown" PreviewKeyDown="ListPlay_PreviewKeyDown" DragOver="ListPlay_DragOver" Drop="ListPlay_Drop">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="추가" Click="Event_Add" InputGestureText="Insert"/>
