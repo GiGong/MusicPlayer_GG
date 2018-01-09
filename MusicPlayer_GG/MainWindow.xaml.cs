@@ -23,6 +23,13 @@ See the file license.txt for copying permission.
  */
 namespace MusicPlayer_GG
 {
+    /* 추가하고 싶은 기능
+     * 
+     * 음악 재생 중 프로그램 종료 후 다시 프로그램을 켰을 경우
+     * 원래 재생하던 부분 부터 다시 재생 가능 - from aimp
+     * 
+     */
+
     /// <summary>
     /// MainWindow for Music Player
     /// made by Gigong
@@ -35,10 +42,11 @@ namespace MusicPlayer_GG
         /// <summary>
         /// 재생 시간이 지남에 따라 정보를 업데이트 시켜줄 Timer
         /// </summary>
-        DispatcherTimer _timer = new DispatcherTimer();
-        string _maxTime;
-        TimeSpan _maxTimeSpan;
-        bool isDown;
+        private DispatcherTimer _timer = new DispatcherTimer();
+        private string _maxTime;
+        private TimeSpan _maxTimeSpan;
+        private bool isDown;
+        // private static bool isToast = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -129,7 +137,7 @@ namespace MusicPlayer_GG
             Player.Paused += Music_Paused;
 
             // Player 클래스 초기화
-            Player.Initiate(Music_Opened);
+            Player.Initiate(Music_Opened, Music_Failed);
 
             // Volume Slider에 마우스 관련 이벤트 추가
             sdrVol.MouseEnter += (s, e1) => { lblVol.Content = Volume + " %"; };
@@ -137,7 +145,7 @@ namespace MusicPlayer_GG
 
             // 프로그램 종료 시 Player에도 종료 이벤트
             // 모두 닫기 전 Player를 먼저 정리
-            this.Closed += Player.Event_Closed;
+            this.Closing += Player.Event_Closed;
 
             // Data Binding
             this.DataContext = this;
@@ -182,6 +190,12 @@ namespace MusicPlayer_GG
                     break;
                     */
 
+#if DEBUG
+                case Key.Back:
+                    // ToastMessage("Test Toast 메시지 입니다. 헤헤 히 후");
+                    break;
+#endif
+
                 #region Media
 
                 case Key.Space:
@@ -203,7 +217,7 @@ namespace MusicPlayer_GG
                 #endregion
 
                 #region Volume
-                    
+
                 case Key.Up:
                     Volume += 2;
                     break;
@@ -332,6 +346,21 @@ namespace MusicPlayer_GG
         private void Music_Paused(object sender, EventArgs e)
         {
             _timer.Stop();
+        }
+
+        /// <summary>
+        /// 음악을 재생할 수 없을 때 Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Music_Failed(object sender, ExceptionEventArgs e)
+        {
+            if (listPlay.Items.Count <= 1)
+                Event_Stop(sender, null);
+            else
+                Event_Next(sender, null);
+
+            // ToastMessage("해당 파일을 재생할 수 없습니다.");
         }
 
         #endregion
@@ -587,7 +616,7 @@ namespace MusicPlayer_GG
             MessageBox.Show("help message");
         }
 
-        /*
+        /* Event_Test
         /// <summary>
         /// Eventhandler For Test
         /// </summary>
@@ -602,6 +631,53 @@ namespace MusicPlayer_GG
                 if (item.InputGestureText == "Up")
                     Volume += 2;
             }
+        }
+        */
+
+        /* Toast Message
+        private void ToastMessage(string message)
+        {
+            lblToast.Content = message;
+
+            var showToast = new System.Threading.Thread(new System.Threading.ThreadStart(() => {
+                while (isToast == true) System.Threading.Thread.Sleep(1000);
+
+                var da1 = new System.Windows.Media.Animation.DoubleAnimation();
+                da1.From = 0;
+                da1.To = 1;
+                da1.Duration = new Duration(TimeSpan.FromSeconds(0.5));
+
+                var da2 = new System.Windows.Media.Animation.DoubleAnimation();
+                da2.From = 1;
+                da2.To = 0;
+                da2.Duration = new Duration(TimeSpan.FromSeconds(1));
+                da2.BeginTime = TimeSpan.FromSeconds(1);
+
+                da1.Completed += (s1, e1) => { bdrToast.BeginAnimation(OpacityProperty, da2); };
+                da2.Completed += (s2, e2) => { bdrToast.Visibility = Visibility.Hidden; isToast = false; };
+
+                // bdrToast.Visibility = Visibility.Visible;
+
+                isToast = true;
+                //bdrToast.BeginAnimation(OpacityProperty, da1);
+
+
+                if (bdrToast.Dispatcher.CheckAccess())
+                    StartToast(da1);
+                else
+                    bdrToast.Dispatcher.BeginInvoke(new VisibilityDelegate(StartToast), da1);
+
+            }));
+
+            showToast.Start();
+        }
+
+        private delegate void VisibilityDelegate(System.Windows.Media.Animation.DoubleAnimation da);
+        private void StartToast(System.Windows.Media.Animation.DoubleAnimation da)
+        {
+            var animation = ;
+            bdrToast.Visibility = Visibility.Visible;
+            bdrToast.BeginAnimation(OpacityProperty, animation);
         }
         */
 

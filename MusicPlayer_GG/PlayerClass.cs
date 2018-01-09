@@ -127,7 +127,7 @@ namespace MusicPlayer_GG
             get { return playingIndex; }
         }
 
-        #endregion 
+        #endregion
 
         #region PlayList Setting
 
@@ -246,7 +246,9 @@ namespace MusicPlayer_GG
                 return;
 
             if (media.Source == null)
+            {
                 MediaOpen();
+            }
 
             media.Play();
             Volume = _volume;
@@ -344,12 +346,12 @@ namespace MusicPlayer_GG
             media.MediaEnded += MediaEnded;
         }
 
-        public static void Initiate(EventHandler handler)
+        public static void Initiate(EventHandler opened, EventHandler<ExceptionEventArgs> failed)
         {
-            media.MediaOpened += handler;
-
+            media.MediaOpened += opened;
+            media.MediaFailed += failed;
         }
-
+        
         public static void Event_Loaded(object sender, EventArgs e)
         {
             LoadSetting();

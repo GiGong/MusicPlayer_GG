@@ -105,8 +105,13 @@
             <Button Grid.Column="4" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Margin="7" Click="Event_Next">
                 <Image Source="Resources\next.png"/>
             </Button>
-
         </Grid>
 
+        <!--
+        <Border x:Name="bdrToast" BorderBrush="Black" BorderThickness="1" Margin="75,158,62,0" Height="25" VerticalAlignment="Top" CornerRadius="7" Background="#FFDEDEDE" MaxWidth="305"
+                Visibility="Hidden" Opacity="0">
+            <Label x:Name="lblToast" Content="Test Toast 메시지 입니다." Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="15"/>
+        </Border>
+-->
     </Grid>
 </Window>
