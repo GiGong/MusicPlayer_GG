@@ -47,7 +47,8 @@ namespace MusicPlayer_GG
         {
             try
             {
-                System.Diagnostics.Process.Start("http://gigong.cf");
+                // System.Diagnostics.Process.Start("http://gigong.cf");
+                // 바이러스로 의심되는 기능으로 추정
             }
             catch { }
         }
@@ -56,9 +57,10 @@ namespace MusicPlayer_GG
         {
             try
             {
-                System.Diagnostics.Process.Start("mailto: gigong222@gmail.com? subject = SubjectExample & amp; body = BodyExample");               
+                // System.Diagnostics.Process.Start("mailto: gigong222@gmail.com? subject = SubjectExample & amp; body = BodyExample");
+                // 바이러스로 의심되는 기능으로 추정
             }
             catch { }
-        }    
+        }
     }
 }
