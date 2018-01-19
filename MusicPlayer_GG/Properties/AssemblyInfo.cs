@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("GiGong")]
 [assembly: AssemblyProduct("MusicPlayer_GG")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright © 2018 GiGong")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

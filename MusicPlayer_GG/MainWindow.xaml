@@ -11,13 +11,20 @@
         xmlns:local="clr-namespace:MusicPlayer_GG"
         mc:Ignorable="d"
         Title="MusicPlayer_GG" Height="600" Width="450" MinWidth="450"
-        Icon="G.ico"
         Loaded="Window_Loaded" KeyDown="Window_KeyDown"
         FontFamily="Fonts/#NanumGothic">
+    <Window.Resources>
+
+        <ContextMenu x:Key="listPlayContextMenu">
+            <MenuItem Header="재생" Click="Event_Play"/>
+            <Separator/>
+            <MenuItem Header="제거" Click="Event_Delete"/>
+        </ContextMenu>
+    </Window.Resources>
     <Grid>
         <DockPanel VerticalAlignment="Top" Height="20">
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="파일" >
+                <MenuItem Header="파일">
                     <MenuItem Header="추가" Click="Event_Add" InputGestureText="Insert"/>
                     <MenuItem Header="제거" Click="Event_Delete" InputGestureText="Delete"/>
                     <Separator />
@@ -68,16 +75,9 @@
                     <MenuItem Header="추가" Click="Event_Add" InputGestureText="Insert"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
-            <ListBox.Resources>
-                <ContextMenu x:Key="listBoxContextMenu">
-                    <MenuItem Header="재생" Click="Event_Play"/>
-                    <Separator/>
-                    <MenuItem Header="제거" Click="Event_Delete"/>
-                </ContextMenu>
-            </ListBox.Resources>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
-                    <Setter Property="ContextMenu" Value="{StaticResource listBoxContextMenu}"/>
+                    <Setter Property="ContextMenu" Value="{StaticResource listPlayContextMenu}"/>
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>

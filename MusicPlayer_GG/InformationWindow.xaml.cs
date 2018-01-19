@@ -33,8 +33,8 @@ namespace MusicPlayer_GG
         {
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             textVersion.Text = "현재 버전 : " + "v" + version.Major + "." + version.Minor + "." + version.Build;
-
-            // textCopyright.Text = "Copyright © 2018 GiGong.\nAll Rights Reserved.";
+            
+            textCopyright.Text = "Copyright © 2018 GiGong.\nAll Rights Reserved.";
         }
 
         private void Event_OK(object sender, RoutedEventArgs e)
@@ -47,8 +47,7 @@ namespace MusicPlayer_GG
         {
             try
             {
-                // System.Diagnostics.Process.Start("http://gigong.cf");
-                // 바이러스로 의심되는 기능으로 추정
+                System.Diagnostics.Process.Start("http://gigong.cf");
             }
             catch { }
         }
@@ -57,8 +56,7 @@ namespace MusicPlayer_GG
         {
             try
             {
-                // System.Diagnostics.Process.Start("mailto: gigong222@gmail.com? subject = SubjectExample & amp; body = BodyExample");
-                // 바이러스로 의심되는 기능으로 추정
+                System.Diagnostics.Process.Start("mailto: gigong222@gmail.com? subject = SubjectExample & amp; body = BodyExample");
             }
             catch { }
         }
