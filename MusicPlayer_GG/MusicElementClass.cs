@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿/*
+Copyright (c) <2018> GiGong
+
+See the file license.txt for copying permission.
+*/
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Media.Imaging;
 
-/*
-Copyright (c) <2018> ICRL
-
-See the file license.txt for copying permission.
-*/
 namespace MusicPlayer_GG
 {
     [DataContract]

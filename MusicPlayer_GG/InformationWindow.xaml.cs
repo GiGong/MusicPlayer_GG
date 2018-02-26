@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+Copyright (c) <2018> GiGong
+
+See the file license.txt for copying permission.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,11 +17,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-/*
-Copyright (c) <2018> ICRL
-
-See the file license.txt for copying permission.
- */
 namespace MusicPlayer_GG
 {
     /// <summary>

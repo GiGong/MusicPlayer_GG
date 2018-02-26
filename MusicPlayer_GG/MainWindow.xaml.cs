@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+Copyright (c) <2018> GiGong
+
+See the file license.txt for copying permission.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,11 +21,6 @@ using System.ComponentModel;
 using System.Windows.Threading;
 using System.Runtime.Serialization.Json;
 
-/*
-Copyright (c) <2018> ICRL
-
-See the file license.txt for copying permission.
- */
 namespace MusicPlayer_GG
 {
     /* 추가하고 싶은 기능

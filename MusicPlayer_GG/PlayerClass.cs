@@ -1,4 +1,9 @@
-﻿using Microsoft.Win32;
+﻿/*
+Copyright (c) <2018> GiGong
+
+See the file license.txt for copying permission.
+*/
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,11 +15,6 @@ using System.Windows.Media;
 using System.Runtime.Serialization.Json;
 using System.Windows.Media.Imaging;
 
-/*
-Copyright (c) <2018> ICRL
-
-See the file license.txt for copying permission.
-*/
 namespace MusicPlayer_GG
 {
     static class Player
