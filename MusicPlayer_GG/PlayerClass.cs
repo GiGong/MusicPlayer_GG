@@ -22,7 +22,7 @@ namespace MusicPlayer_GG
         #region Variables
 
         static MediaPlayer media = new MediaPlayer();
-        static List<MediaElement> _list = new List<MediaElement>();
+        static List<MediaElement_GG> _list = new List<MediaElement_GG>();
         static Random rand = new Random((int)DateTime.Now.Ticks);
 
         static int playingIndex;
@@ -87,7 +87,7 @@ namespace MusicPlayer_GG
             }
         }
 
-        public static List<MediaElement> PlayList
+        public static List<MediaElement_GG> PlayList
         {
             get { return _list; }
         }
@@ -135,7 +135,7 @@ namespace MusicPlayer_GG
         {
             MediaStop();
             playingIndex = -1;
-            _list = new List<MediaElement>();
+            _list = new List<MediaElement_GG>();
 
             Changed?.Invoke(PlayList, null);
         }
@@ -169,7 +169,7 @@ namespace MusicPlayer_GG
                 if (MessageBox.Show("현재 재생목록을 지우시겠습니까?", "Music Player", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     MediaStop();
-                    _list = new List<MediaElement>();
+                    _list = new List<MediaElement_GG>();
                 }
                 LoadPlayList(dialog.FileName);
                 Changed?.Invoke(PlayList, null);
@@ -437,7 +437,7 @@ namespace MusicPlayer_GG
 
             List<string> tList = new List<string>();
 
-            foreach (MediaElement item in _list)
+            foreach (MediaElement_GG item in _list)
                 tList.Add(item.Path);
             tList.Add(playingIndex.ToString());
 

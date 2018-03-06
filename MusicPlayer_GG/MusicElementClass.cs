@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 namespace MusicPlayer_GG
 {
     [DataContract]
-    class MusicElement : MediaElement
+    class MusicElement : MediaElement_GG
     {
         string fullPath;
         string artist, title;
