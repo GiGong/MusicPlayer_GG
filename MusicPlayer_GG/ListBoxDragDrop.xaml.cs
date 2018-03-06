@@ -55,14 +55,18 @@ namespace GiGong
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ListPlay_KeyDown(object sender, KeyEventArgs e)
+        private void ListBox_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
                 case Key.Enter:
+                    if (box.SelectedIndex > -1)
+                        Player.MediaSelectPlay(box.SelectedIndex);
                     break;
 
                 case Key.Delete:
+                    while (box.SelectedIndex > -1)
+                        Player.MediaDelete(box.SelectedIndex);
                     break;
 
                 case Key.Insert:
@@ -76,15 +80,24 @@ namespace GiGong
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ListPlay_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            if (box.SelectedIndex > -1)
+                Player.MediaSelectPlay(box.SelectedIndex);
         }
+
+            #region Drag Drop
 
         private void ListBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (isKeyDown == true)
                 return;
+
+            if (e.ClickCount == 2)
+            {
+                ListBox_MouseDoubleClick(sender, e);
+                return;
+            }
 
             startPoint = e.GetPosition(null);
             var listBoxItem = FindAncestor<ListBoxItem>((DependencyObject)(box.InputHitTest(e.GetPosition(box))));
@@ -136,13 +149,47 @@ namespace GiGong
                         listDrag.Add(item);
                 }
 
-                DataObject data = new DataObject("GGData", listDrag);
+                DataObject data = new DataObject("MediaElement_GG", listDrag);
                 DragDrop.DoDragDrop(listBoxItem, data, DragDropEffects.Move);
             }
         }
 
         private void ListBox_DragOver(object sender, DragEventArgs e)
         {
+            bool dropEnabled = true;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
+            {
+                string[] filenames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+                e.Effects = DragDropEffects.Copy;
+
+                foreach (string filename in filenames)
+                {
+                    string extension = System.IO.Path.GetExtension(filename).ToLowerInvariant();
+                    if (IsAudioExtension(extension) == false && (extension != ".gpl"))
+                    {
+                        dropEnabled = false;
+                        break;
+                    }
+                }
+            }
+            else if (e.Data.GetDataPresent("MediaElement_GG"))
+            {
+                e.Effects = DragDropEffects.Move;
+            }
+            else
+            {
+                dropEnabled = false;
+            }
+
+            if (dropEnabled == false)
+            {
+                e.Effects = DragDropEffects.None;
+                e.Handled = true;
+                return;
+            }
+
+            // -------------------- Scroll Viewer --------------------
+
             ScrollViewer scrollViewer = FindVisualChild<ScrollViewer>(box);
 
             double tolerance = 10;
@@ -161,7 +208,7 @@ namespace GiGong
 
         private void ListBox_Drop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent("GGData"))
+            if (e.Data.GetDataPresent("MediaElement_GG"))
             {
                 int index = -1;
                 var target = FindAncestor<ListBoxItem>((DependencyObject)(box.InputHitTest(e.GetPosition(box))));
@@ -194,7 +241,32 @@ namespace GiGong
                 listDrag = null;
                 isDrag = false;
             }
+            else if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                Player.MediaAdd(files);
+            }
+
         }
+
+        /// <summary>
+        /// 파일 확장자가 Audio파일이 맞는가 확인
+        /// </summary>
+        /// <param name="extension">extension to check</param>
+        /// <returns></returns>
+        private bool IsAudioExtension(string extension)
+        {
+            List<string> Extensions = new List<string>() { ".aac", ".ac3", ".aif", ".aiff", ".ape", ".cda", ".flac", ".m4a", ".mid", ".midi", ".mod", ".mp2", ".mp3", ".mpc", ".ofs", ".ogg", ".rmi", ".tak", ".wav", ".wma", ".wv" };
+
+            foreach (string item in Extensions)
+                if (item == extension)
+                    return true;
+
+            return false;
+        }
+
+            #endregion
 
         #endregion
 

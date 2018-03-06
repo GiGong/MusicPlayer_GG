@@ -9,8 +9,8 @@
                 Drop="ListBox_Drop"
                 DragOver="ListBox_DragOver"
              
-                KeyDown="ListPlay_KeyDown"
-                MouseDoubleClick="ListPlay_MouseDoubleClick"
+                KeyDown="ListBox_KeyDown"
+                MouseDoubleClick="ListBox_MouseDoubleClick"
                 PreviewMouseMove="ListBox_PreviewMouseMove"
                 PreviewMouseLeftButtonDown="ListBox_PreviewMouseLeftButtonDown"
                 PreviewMouseLeftButtonUp="ListBox_PreviewMouseLeftButtonUp"
@@ -20,7 +20,7 @@
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="BorderBrush" Value="Gray"/>
                 <Setter Property="Padding" Value="2"/>
-
+                
                 <EventSetter Event="DragOver" Handler="ListBoxItem_DragOver"/>
                 <EventSetter Event="DragLeave" Handler="ListBoxItem_DragLeave"/>
                 <EventSetter Event="PreviewMouseMove" Handler="ListBoxItem_PreviewMouseMove"/>

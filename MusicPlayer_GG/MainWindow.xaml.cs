@@ -162,12 +162,12 @@ namespace MusicPlayer_GG
             // Volume Slider에 마우스 관련 이벤트 추가
             sdrVol.MouseEnter += (s, e1) => { lblVol.Content = Volume + " %"; };
             sdrVol.MouseLeave += (s, e1) => { lblVol.Content = ""; };
+            
 
-            /* Closing Event Handler 로 옮김
+            // Closing Event Handler 로 옮김            
             // 프로그램 종료 시 Player에도 종료 이벤트
             // 모두 닫기 전 Player를 먼저 정리
-            this.Closing += Player.Event_Closed;
-            */
+            // this.Closing += Player.Event_Closed;
 
             // Data Binding
             this.DataContext = this;
@@ -176,14 +176,9 @@ namespace MusicPlayer_GG
             Player.Event_Loaded(sender, e);
 
             // Load한 값 설정
-            // listPlay.ItemsSource = Player.PlayList;
             listPlayDragDrop.SetSource(Player.PlayList);
             listPlay.SelectedIndex = Player.PlayingIndex;
-
-            // Plsyer.PlayList = ListBoxDD.Items.OfType<MediaElement>().ToList();
-            //ListBoxDD.Items. = Player.PlayList;
-            //ListBoxDD.SelectedIndex = Player.PlayingIndex;
-
+            
             sdrVol.Value = Volume;
         }
 
@@ -580,149 +575,12 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region ----Event for listPlay----
-
-        /// <summary>
-        /// 재생목록에서 받아들인 키 처리
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ListPlay_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Enter:
-                    if (listPlay.SelectedIndex > -1)
-                        Player.MediaSelectPlay(listPlay.SelectedIndex);
-                    break;
-
-                case Key.Delete:
-                    while (listPlay.SelectedIndex > -1)
-                        Player.MediaDelete(listPlay.SelectedIndex);
-                    break;
-
-                case Key.Insert:
-                    // 노래 추가
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// 마우스로 더블클릭시 해당 음악 재생
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ListPlay_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (listPlay.SelectedIndex > -1)
-                Player.MediaSelectPlay(listPlay.SelectedIndex);
-        }
-
-        #endregion
-
-        #region ----Drag and Drop----
-
-        /// <summary>
-        /// 플레이리스트에 파일을 드래그, 올려놓았을 시
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ListPlay_DragOver(object sender, DragEventArgs e)
-        {
-            bool dropEnabled = true;
-            if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
-            {
-                string[] filenames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
-
-                foreach (string filename in filenames)
-                {
-                    string extension = System.IO.Path.GetExtension(filename).ToLowerInvariant();
-                    if (IsAudioExtension(extension) == false && (extension != ".gpl"))
-                    {
-                        dropEnabled = false;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                dropEnabled = false;
-            }
-
-            if (!dropEnabled)
-            {
-                e.Effects = DragDropEffects.None;
-                e.Handled = true;
-            }
-        }
-
-        /// <summary>
-        /// 플레이리스트에 파일을 드래그, 드롭 했을 시
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ListPlay_Drop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-                Player.MediaAdd(files);
-            }
-        }
-
-        /// <summary>
-        /// 파일 확장자가 Audio파일이 맞는가 확인
-        /// </summary>
-        /// <param name="ex"></param>
-        /// <returns></returns>
-        private bool IsAudioExtension(string ex)
-        {
-            List<string> Extensions = new List<string>() { ".aac", ".ac3", ".aif", ".aiff", ".ape", ".cda", ".flac", ".m4a", ".mid", ".midi", ".mod", ".mp2", ".mp3", ".mpc", ".ofs", ".ogg", ".rmi", ".tak", ".wav", ".wma", ".wv" };
-
-            foreach (string item in Extensions)
-                if (item == ex)
-                    return true;
-
-            return false;
-        }
-
-
-        #endregion
-
         #region Test
 
         private void Test_Help(object sender, EventArgs e)
         {
             MessageBox.Show("help message");
         }
-
-        /// <summary>
-        /// 재생목록에 입력되는 키 처리
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ListPlay_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Up:
-                case Key.Down:
-
-                case Key.Enter:
-                case Key.Delete:
-                    break;
-
-                // 위에 입력되는 키들은 재생목록에서 받아들임
-                // 그 외 키들은 Window에 전달
-
-                default:
-                    e.Handled = true;
-                    Window_KeyDown(sender, e);
-                    break;
-            }
-        }
-
 
         /* Event_Test
         /// <summary>
