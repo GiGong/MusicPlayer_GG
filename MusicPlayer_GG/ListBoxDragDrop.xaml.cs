@@ -44,6 +44,32 @@ namespace GiGong
 
         #region Music
 
+        private void Event_Play(object sender, RoutedEventArgs e)
+        {
+            if (box.SelectedIndex > -1)
+                Player.MediaSelectPlay(box.SelectedIndex);
+        }
+
+        /// <summary>
+        /// 재생목록에 파일 추가
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Event_Add(object sender, RoutedEventArgs e)
+        {
+            Player.MediaAdd();
+        }
+
+        /// <summary>
+        /// 재생목록에서 파일 제거
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Event_Delete(object sender, RoutedEventArgs e)
+        {
+            while (box.SelectedIndex > -1)
+                Player.MediaDelete(box.SelectedIndex);
+        }
 
 
         #endregion

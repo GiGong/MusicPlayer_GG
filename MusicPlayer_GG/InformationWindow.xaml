@@ -11,7 +11,7 @@
         xmlns:local="clr-namespace:MusicPlayer_GG"
         mc:Ignorable="d"
         Title="정보" Height="450" Width="350" ResizeMode="NoResize"
-        Icon="G.ico" FontFamily="Fonts/#NanumGothic"
+        Icon="G.ico" FontFamily="Fonts/#NanumGothic" WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded">
     <Grid Background="WhiteSmoke">
         <Grid.ColumnDefinitions>

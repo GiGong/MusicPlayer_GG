@@ -61,3 +61,11 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+###############################################################################
+# behavior for clickonce
+# 
+###############################################################################
+*.manifest	binary
+*.application	binary
+*.deploy	binary

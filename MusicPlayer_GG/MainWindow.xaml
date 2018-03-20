@@ -14,13 +14,6 @@
         Title="MusicPlayer_GG" Height="600" Width="450" MinWidth="450"
         Loaded="Window_Loaded" KeyDown="Window_KeyDown" Closing="Window_Closing"
         FontFamily="Fonts/#NanumGothic">
-    <Window.Resources>
-        <ContextMenu x:Key="listPlayContextMenu">
-            <MenuItem Header="재생" Click="Event_Play"/>
-            <Separator/>
-            <MenuItem Header="제거" Click="Event_Delete"/>
-        </ContextMenu>
-    </Window.Resources>
     <Grid>
         <DockPanel VerticalAlignment="Top" Height="20">
             <Menu DockPanel.Dock="Top">
@@ -71,23 +64,8 @@
         <CheckBox x:Name="cbxShuffle" IsChecked="{Binding IsShuffle}" Content="임의 재생" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,155,20,0"/>
         <CheckBox x:Name="cbsRepeatOne" IsChecked="{Binding IsRepeatOnce}" Content="한곡 반복" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,172,20,0"/>
 
-        <GiGong:ListBoxDragDrop x:Name="listPlayDragDrop" Margin="20,240,20,20">
-        </GiGong:ListBoxDragDrop>
-<!--
-        <ListBox x:Name="listPlay" Margin="20,240,20,20" SelectionMode="Extended" AllowDrop="True" 
-                 MouseDoubleClick="ListPlay_MouseDoubleClick" KeyDown="ListPlay_KeyDown" PreviewKeyDown="ListPlay_PreviewKeyDown" DragOver="ListPlay_DragOver" Drop="ListPlay_Drop">
-            <ListBox.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="추가" Click="Event_Add" InputGestureText="Insert"/>
-                </ContextMenu>
-            </ListBox.ContextMenu>
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="ContextMenu" Value="{StaticResource listPlayContextMenu}"/>
-                </Style>
-            </ListBox.ItemContainerStyle>
-        </ListBox>
--->
+        <GiGong:ListBoxDragDrop x:Name="listPlayDragDrop" Margin="20,240,20,20"/>
+
         <Grid VerticalAlignment="Top" Margin="125,155,107,0" MinWidth="160" MaxWidth="160" MinHeight="32" MaxHeight="32">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />

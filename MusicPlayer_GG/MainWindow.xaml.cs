@@ -128,7 +128,7 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        public ListBox listPlay
+        public ListBox ListPlay
         {
             get { return listPlayDragDrop.ListBoxDD; }
             set { listPlayDragDrop.ListBoxDD = value; }
@@ -151,7 +151,7 @@ namespace MusicPlayer_GG
             _timer.Tick += _timer_Tick;
 
             // Player 클래스에 Event 등록
-            Player.Changed += (s, e1) => { listPlay.Items.Refresh(); };
+            Player.Changed += (s, e1) => { ListPlay.Items.Refresh(); };
             Player.Played += Update_Informaion;
             Player.Stoped += Music_Stoped;
             Player.Paused += Music_Paused;
@@ -177,7 +177,7 @@ namespace MusicPlayer_GG
 
             // Load한 값 설정
             listPlayDragDrop.SetSource(Player.PlayList);
-            listPlay.SelectedIndex = Player.PlayingIndex;
+            ListPlay.SelectedIndex = Player.PlayingIndex;
             
             sdrVol.Value = Volume;
         }
@@ -272,8 +272,9 @@ namespace MusicPlayer_GG
             InformationWindow informationWindow = new InformationWindow();
 
             // 새 윈도우를 현재 윈도우의 중앙에 위치하도록 Top, Left 조정
-            informationWindow.Top = this.Top + (this.ActualHeight - informationWindow.Height) / 2;
-            informationWindow.Left = this.Left + (this.ActualWidth - informationWindow.Width) / 2;
+            // informationWindow.Top = this.Top + (this.ActualHeight - informationWindow.Height) / 2;
+            // informationWindow.Left = this.Left + (this.ActualWidth - informationWindow.Width) / 2;
+            // information window의 WindowStartupLocation="CenterScreen" 으로 정리 ( 화면 가운데 )
 
             informationWindow.ShowDialog();
         }
@@ -332,7 +333,7 @@ namespace MusicPlayer_GG
             if (Player.NowAlbumArt != null)
                 imgArt.Source = Player.NowAlbumArt;
 
-            listPlay.SelectedIndex = Player.PlayingIndex;
+            ListPlay.SelectedIndex = Player.PlayingIndex;
 
             _timer.Start();
         }
@@ -371,7 +372,7 @@ namespace MusicPlayer_GG
         /// <param name="e"></param>
         private void Music_Failed(object sender, ExceptionEventArgs e)
         {
-            if (listPlay.Items.Count <= 1)
+            if (ListPlay.Items.Count <= 1)
                 Event_Stop(sender, null);
             else
                 Event_Next(sender, null);
@@ -390,8 +391,8 @@ namespace MusicPlayer_GG
         /// <param name="e"></param>
         private void Event_Play(object sender, RoutedEventArgs e)
         {
-            if (listPlay.SelectedIndex > -1)
-                Player.MediaSelectPlay(listPlay.SelectedIndex);
+            if (ListPlay.SelectedIndex > -1)
+                Player.MediaSelectPlay(ListPlay.SelectedIndex);
         }
 
         /// <summary>
@@ -455,8 +456,8 @@ namespace MusicPlayer_GG
         /// <param name="e"></param>
         private void Event_Delete(object sender, RoutedEventArgs e)
         {
-            while (listPlay.SelectedIndex > -1)
-                Player.MediaDelete(listPlay.SelectedIndex);
+            while (ListPlay.SelectedIndex > -1)
+                Player.MediaDelete(ListPlay.SelectedIndex);
         }
 
         #endregion
@@ -547,8 +548,8 @@ namespace MusicPlayer_GG
         private void Event_PlayListNew(object sender, RoutedEventArgs e)
         {
             Player.PlayList_New();
-            listPlay.ItemsSource = Player.PlayList;
-            listPlay.SelectedIndex = Player.PlayingIndex;
+            ListPlay.ItemsSource = Player.PlayList;
+            ListPlay.SelectedIndex = Player.PlayingIndex;
         }
 
         /// <summary>
@@ -569,8 +570,8 @@ namespace MusicPlayer_GG
         private void Event_PlayListLoad(object sender, RoutedEventArgs e)
         {
             Player.PlayList_Load();
-            listPlay.ItemsSource = Player.PlayList;
-            listPlay.SelectedIndex = Player.PlayingIndex;
+            ListPlay.ItemsSource = Player.PlayList;
+            ListPlay.SelectedIndex = Player.PlayingIndex;
         }
 
         #endregion
