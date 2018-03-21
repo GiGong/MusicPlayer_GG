@@ -59,7 +59,7 @@ namespace MusicPlayer_GG
         /// <summary>
         /// 마우스가 시간 탐색 Slider를 눌렀는지 확인
         /// </summary>
-        private bool isDown;
+        private bool isDown = false;
         // private static bool isToast = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -126,17 +126,21 @@ namespace MusicPlayer_GG
             }
         }
 
-        #endregion
-
         public ListBox ListPlay
         {
             get { return listPlayDragDrop.ListBoxDD; }
             set { listPlayDragDrop.ListBoxDD = value; }
         }
 
+        public string PlayListName { get { return "현재 : " + System.IO.Path.GetFileName(Player.PlayListPath); } }
+
+        #endregion
+
         public MainWindow()
         {
             InitializeComponent();
+
+            this.Title = Player.PROGRAM_NAME;
         }
 
         /// <summary>
@@ -146,40 +150,32 @@ namespace MusicPlayer_GG
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // Player Load (설정, 재생목록 Load)
+            Player.Event_Loaded(sender, e);
+
             // Timer 설정
             _timer.Interval = TimeSpan.FromMilliseconds(500);
             _timer.Tick += _timer_Tick;
 
             // Player 클래스에 Event 등록
             Player.Changed += (s, e1) => { ListPlay.Items.Refresh(); };
-            Player.Played += Update_Informaion;
+            Player.Opened += Update_TotalPlayTime;
+            Player.Opened += Update_Informaion;
+            Player.Failed += Music_Failed;
+            Player.Played += Music_Played;
             Player.Stoped += Music_Stoped;
             Player.Paused += Music_Paused;
-
-            // Player 클래스 초기화
-            Player.Initiate(Update_TotalPlayTime, Music_Failed);
 
             // Volume Slider에 마우스 관련 이벤트 추가
             sdrVol.MouseEnter += (s, e1) => { lblVol.Content = Volume + " %"; };
             sdrVol.MouseLeave += (s, e1) => { lblVol.Content = ""; };
-            
-
-            // Closing Event Handler 로 옮김            
-            // 프로그램 종료 시 Player에도 종료 이벤트
-            // 모두 닫기 전 Player를 먼저 정리
-            // this.Closing += Player.Event_Closed;
 
             // Data Binding
             this.DataContext = this;
 
-            // Player Load (설정, 재생목록 Load)
-            Player.Event_Loaded(sender, e);
-
-            // Load한 값 설정
+            // Player가 Load한 값 설정
             listPlayDragDrop.SetSource(Player.PlayList);
             ListPlay.SelectedIndex = Player.PlayingIndex;
-            
-            sdrVol.Value = Volume;
         }
 
         /// <summary>
@@ -317,7 +313,10 @@ namespace MusicPlayer_GG
         /// <param name="e"></param>
         private void Update_TotalPlayTime(object sender, EventArgs e)
         {
+            Update_Informaion(sender, e);
+
             MaxTime = Player.TotalPlayTime;
+            _timer_Tick(sender, e);
         }
 
         /// <summary>
@@ -329,12 +328,15 @@ namespace MusicPlayer_GG
         {
             textTitle.Text = Player.NowTitle;
             textMusic.Text = Player.NowPlaying;
-            
+
             if (Player.NowAlbumArt != null)
                 imgArt.Source = Player.NowAlbumArt;
 
             ListPlay.SelectedIndex = Player.PlayingIndex;
+        }
 
+        private void Music_Played(object sender, EventArgs e)
+        {
             _timer.Start();
         }
 
@@ -346,8 +348,8 @@ namespace MusicPlayer_GG
         private void Music_Stoped(object sender, EventArgs e)
         {
             _timer.Stop();
-            textTitle.Text = Player.NowTitle;
-            textMusic.Text = Player.NowPlaying;
+            textTitle.Text = "";
+            textMusic.Text = "";
 
             imgArt.Source = null;
             MaxTime = TimeSpan.FromSeconds(100);
@@ -370,7 +372,7 @@ namespace MusicPlayer_GG
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Music_Failed(object sender, ExceptionEventArgs e)
+        private void Music_Failed(object sender, EventArgs e)
         {
             if (ListPlay.Items.Count <= 1)
                 Event_Stop(sender, null);
@@ -446,7 +448,7 @@ namespace MusicPlayer_GG
         /// <param name="e"></param>
         private void Event_Add(object sender, RoutedEventArgs e)
         {
-            Player.MediaAdd();
+            Player.MediaAddDialog();
         }
 
         /// <summary>
@@ -552,14 +554,19 @@ namespace MusicPlayer_GG
             ListPlay.SelectedIndex = Player.PlayingIndex;
         }
 
+        private void Event_PlayListSave(object sender, RoutedEventArgs e)
+        {
+            Player.PlayList_Save();
+        }
+
         /// <summary>
         /// 재생목록 따로 저장하기
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Event_PlayListSave(object sender, RoutedEventArgs e)
+        private void Event_PlayListSaveAs(object sender, RoutedEventArgs e)
         {
-            Player.PlayList_Save();
+            Player.PlayList_SaveAs();
         }
 
         /// <summary>
@@ -569,9 +576,24 @@ namespace MusicPlayer_GG
         /// <param name="e"></param>
         private void Event_PlayListLoad(object sender, RoutedEventArgs e)
         {
+            switch (MessageBox.Show("현재 재생목록을 저장하시겠습니까?\n\"" + PlayListName + "\"", Player.PROGRAM_NAME, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning, MessageBoxResult.Cancel))
+            {
+                case MessageBoxResult.Yes:
+                    Event_PlayListSave(sender, e);
+                    break;
+
+                case MessageBoxResult.No:
+                    break;
+
+                case MessageBoxResult.Cancel:
+                    return;
+            }
+
             Player.PlayList_Load();
             ListPlay.ItemsSource = Player.PlayList;
             ListPlay.SelectedIndex = Player.PlayingIndex;
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("PlayListName"));
         }
 
         #endregion

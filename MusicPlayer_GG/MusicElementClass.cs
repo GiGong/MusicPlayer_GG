@@ -104,7 +104,7 @@ namespace MusicPlayer_GG
             }
             catch (IOException)
             {
-                // System.Windows.MessageBox.Show("파일이 이미 사용중입니다.", "경고", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                // System.Windows.MessageBox.Show("파일이 이미 사용중입니다.", PROGRAM_NAME, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return;
             }
 

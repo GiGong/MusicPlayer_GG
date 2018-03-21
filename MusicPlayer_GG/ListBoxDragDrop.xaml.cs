@@ -31,7 +31,7 @@ namespace GiGong
         public ListBoxDragDrop()
         {
             InitializeComponent();
-            
+
             box.KeyDown += (s, e) => { isKeyDown = true; };
             box.KeyUp += (s, e) => { isKeyDown = false; };
         }
@@ -57,7 +57,7 @@ namespace GiGong
         /// <param name="e"></param>
         private void Event_Add(object sender, RoutedEventArgs e)
         {
-            Player.MediaAdd();
+            Player.MediaAddDialog();
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace GiGong
                 Player.MediaSelectPlay(box.SelectedIndex);
         }
 
-            #region Drag Drop
+        #region Drag Drop
 
         private void ListBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -240,7 +240,7 @@ namespace GiGong
                 var target = FindAncestor<ListBoxItem>((DependencyObject)(box.InputHitTest(e.GetPosition(box))));
 
                 if (target != null && listDrag.Contains(target.Content as MediaElement_GG))
-                {
+                { // contains를 위해 null 확인
                     index = ListSource.IndexOf(target.Content as MediaElement_GG);
                     target = null;
                 }
@@ -262,7 +262,6 @@ namespace GiGong
                 {
                     ListSource.Insert(index, listDrag[listDrag.Count - i]);
                 }
-                box.Items.Refresh();
 
                 listDrag = null;
                 isDrag = false;
@@ -271,9 +270,18 @@ namespace GiGong
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-                Player.MediaAdd(files);
-            }
+                int index = -1;
+                var target = FindAncestor<ListBoxItem>((DependencyObject)(box.InputHitTest(e.GetPosition(box))));
 
+                if (target == null)
+                    index = ListSource.Count;
+                else
+                    index = ListSource.IndexOf(target.Content as MediaElement_GG);
+                
+                Player.MediaInsert(files, index);
+            }
+            
+            box.Items.Refresh();
         }
 
         /// <summary>
@@ -292,7 +300,7 @@ namespace GiGong
             return false;
         }
 
-            #endregion
+        #endregion
 
         #endregion
 
@@ -302,7 +310,7 @@ namespace GiGong
         {
             var item = sender as ListBoxItem;
 
-            if (listDrag.Contains(item.Content as MediaElement_GG))
+            if (listDrag != null && listDrag.Contains(item.Content as MediaElement_GG))
                 return;
 
             item.Background = Brushes.PowderBlue;
@@ -314,7 +322,7 @@ namespace GiGong
         {
             var item = sender as ListBoxItem;
 
-            if (listDrag.Contains(item.Content as MediaElement_GG))
+            if (listDrag != null && listDrag.Contains(item.Content as MediaElement_GG))
                 return;
 
             item.Background = Brushes.Transparent;

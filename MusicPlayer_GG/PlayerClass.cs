@@ -19,17 +19,22 @@ namespace MusicPlayer_GG
 {
     static class Player
     {
+        public const string PROGRAM_NAME = "MusicPlayer_GG";
+
         #region Variables
 
-        static MediaPlayer media = new MediaPlayer();
-        static Random rand = new Random((int)DateTime.Now.Ticks);
-        static double _volume;
-        static bool isPause, isPlay;
+        private static MediaPlayer media = new MediaPlayer();
+        private static Random rand = new Random((int)DateTime.Now.Ticks);
+        private static double _volume;
+        private static bool isPause, isPlay;
+        // isPlay는 명확히 사용되는 곳이 없으나 제거하기에는 복잡해지기에 우선 유지
+
+        private static long _position;
 
         public static bool isShuffle, isRepeatOne;
 
-        public static EventHandler //Ended, // Played
-                                    Played, Stoped, Paused, Changed;
+        public static EventHandler //Ended
+                                   Opened, Played, Stoped, Paused, Changed, Failed;
 
         #endregion
 
@@ -83,15 +88,15 @@ namespace MusicPlayer_GG
             }
         }
 
-        public static List<MediaElement_GG> PlayList { get; private set; } = new List<MediaElement_GG>();
+        public static List<MediaElement_GG> PlayList { get; private set; }
+
+        public static string PlayListPath { get; private set; }
 
         public static string NowTitle
         {
             get
             {
-                if (isPlay == true)
-                    return (PlayList[PlayingIndex] as MusicElement).Title;
-                return "";
+                return (PlayList[PlayingIndex] as MusicElement).Title;
             }
         }
 
@@ -99,9 +104,7 @@ namespace MusicPlayer_GG
         {
             get
             {
-                if (isPlay == true)
-                    return PlayList[PlayingIndex];
-                return "";
+                return PlayList[PlayingIndex];
             }
         }
 
@@ -109,13 +112,90 @@ namespace MusicPlayer_GG
         {
             get
             {
-                if (isPlay == true && (PlayList[PlayingIndex] is MusicElement))
+                if (PlayList[PlayingIndex] is MusicElement)
                     return (PlayList[PlayingIndex] as MusicElement).AlbumArt;
                 return null;
             }
         }
 
         public static int PlayingIndex { get; private set; }
+
+        #endregion
+
+        #region Events
+
+        static Player()
+        {
+            Volume = 0.5;
+            PlayingIndex = -1;
+            isPause = false;
+            isPlay = false;
+            isShuffle = false;
+            isRepeatOne = false;
+            _position = 0;
+
+            PlayList = new List<MediaElement_GG>();
+            PlayListPath = "lately.gpl";
+
+            media.MediaOpened += Event_Opened;
+            media.MediaEnded += MediaEnded;
+            media.MediaFailed += Event_Failed;
+        }
+
+        public static void Event_Loaded(object sender, EventArgs e)
+        {
+            LoadSetting();
+            LoadPlayList(PlayListPath);
+        }
+
+        private static void Event_Opened(object sender, EventArgs e)
+        {
+            Opened?.Invoke(sender, e);
+        }
+
+        public static void Event_Closed(object sender, EventArgs e)
+        {
+            SaveSetting();
+            SavePlayList();
+            MediaStop();
+        }
+
+        private static void Event_Failed(object sender, EventArgs e)
+        {
+            Failed?.Invoke(sender, e);
+        }
+
+        private static void MediaEnded(object sender, EventArgs e)
+        {
+            if (isRepeatOne == true)
+            {
+                media.Close();
+                MediaPlay();
+            }
+            else
+                MediaNext();
+        }
+
+        private static void PlayList_Loaded(object sender, EventArgs e)
+        {
+            // 마지막으로 재생한 곡, 재생 위치
+            if (_position > 0)
+            {
+                Opened += Load_Position;
+                MediaOpen();
+
+                void Load_Position(object sender1, EventArgs e1)
+                {// 이 이벤트 핸들러가 MainWindow에서 Position을 사용하는 핸들러들 보다 먼저 Opened에 추가되어야 먼저 호출됨
+                 // 따라서 Event_Loaded가 MainWindow의 Player.Opened += Update_TotalPlayTime; Player.Opened += Update_Informaion; 보다 위에 있어야 함
+                    media.Position = new TimeSpan(_position);
+                    isPause = true;
+
+                    Opened -= Load_Position;
+
+                    Opened?.Invoke(sender1, e1);
+                }
+            }
+        }
 
         #endregion
 
@@ -131,6 +211,11 @@ namespace MusicPlayer_GG
         }
 
         public static void PlayList_Save()
+        {
+            SavePlayList();
+        }
+
+        public static void PlayList_SaveAs()
         {
             SaveFileDialog dialog = new SaveFileDialog();
 
@@ -156,11 +241,7 @@ namespace MusicPlayer_GG
 
             if (dialog.ShowDialog() == true)
             {
-                if (MessageBox.Show("현재 재생목록을 지우시겠습니까?", "Music Player", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                {
-                    MediaStop();
-                    PlayList = new List<MediaElement_GG>();
-                }
+                MediaStop();
                 LoadPlayList(dialog.FileName);
                 Changed?.Invoke(PlayList, null);
             }
@@ -170,7 +251,7 @@ namespace MusicPlayer_GG
 
         #region PlayList Control
 
-        public static void MediaAdd()
+        public static void MediaAddDialog()
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Multiselect = true;
@@ -185,14 +266,16 @@ namespace MusicPlayer_GG
             }
         }
 
-        public static void MediaAdd(string[] lists)
+        public static void MediaInsert(string[] lists, int index = -1)
         {
             foreach (string item in lists)
             {
                 if (System.IO.Path.GetExtension(item.ToLowerInvariant()) == ".gpl")
-                    LoadPlayList(item);
+                {
+                    InsertPlayList(item, index);
+                }
                 else
-                    PlayList.Add(new MusicElement(item));
+                    PlayList.Insert(index, new MusicElement(item));
             }
             Changed?.Invoke(PlayList, null);
         }
@@ -224,9 +307,13 @@ namespace MusicPlayer_GG
         {
             if (i < 0 || i >= PlayList.Count)
                 throw new ArgumentOutOfRangeException();
-            PlayingIndex = i;
 
-            MediaStop();
+            if (isPause == false || PlayingIndex != i)
+            {
+                PlayingIndex = i;
+                MediaStop();
+            }
+
             MediaPlay();
         }
 
@@ -322,59 +409,16 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region Events
-
-        static Player()
-        {
-            Volume = 0.5;
-            PlayingIndex = -1;
-            isPause = false;
-            isPlay = false;
-            isShuffle = false;
-            isRepeatOne = false;
-
-            media.MediaEnded += MediaEnded;
-        }
-
-        public static void Initiate(EventHandler opened, EventHandler<ExceptionEventArgs> failed)
-        {
-            media.MediaOpened += opened;
-            media.MediaFailed += failed;
-        }
-        
-        public static void Event_Loaded(object sender, EventArgs e)
-        {
-            LoadSetting();
-            LoadPlayList("");
-        }
-
-        public static void Event_Closed(object sender, EventArgs e)
-        {
-            MediaStop();
-            SaveSetting();
-            SavePlayList("");
-        }
-
-        private static void MediaEnded(object sender, EventArgs e)
-        {
-            if (isRepeatOne == true)
-            {
-                media.Close();
-                MediaPlay();
-            }
-            else
-                MediaNext();
-        }
-
-        #endregion
-
         #region File Control
 
         private static void SaveSetting()
         {
             DataContractJsonSerializer dcjs = new DataContractJsonSerializer(typeof(List<object>));
 
-            List<object> writeList = new List<object>() { isPause, isPlay, isShuffle, isRepeatOne, _volume.ToString("F2") };
+            // List<object> writeList = new List<object>() { isPause, isPlay, isShuffle, isRepeatOne, _volume.ToString("F2") };
+            // 0.1.3 까지 저장 방식
+
+            List<object> writeList = new List<object>() { isPause, isPlay, isShuffle, isRepeatOne, _volume.ToString("F2"), PlayListPath };
 
             try
             {
@@ -385,7 +429,7 @@ namespace MusicPlayer_GG
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message, PROGRAM_NAME);
             }
         }
 
@@ -406,41 +450,56 @@ namespace MusicPlayer_GG
                 isPlay = (bool)readList[1];
                 isShuffle = (bool)readList[2];
                 isRepeatOne = (bool)readList[3];
-                Volume = double.Parse(readList[4].ToString());
+
+                //Volume = double.Parse(readList[4].ToString());
+                Volume = Convert.ToDouble(readList[4]);
+
+                if (readList.Count > 5)
+                {
+                    PlayListPath = readList[5].ToString();
+                }
             }
             catch (Exception e)
             {
                 if (e is System.IO.FileNotFoundException)
                     return;
                 else
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, PROGRAM_NAME);
             }
 
         }
 
-        private static void SavePlayList(string fileName)
+        private static void SavePlayList(string fileName = null)
         {
             DataContractJsonSerializer dcjs = new DataContractJsonSerializer(typeof(List<string>));
 
-            if (string.IsNullOrWhiteSpace(fileName))
-                fileName = "lately.gpl";
+            if (string.IsNullOrWhiteSpace(fileName) == false)
+                PlayListPath = fileName;
 
             List<string> writeList = new List<string>();
 
+            writeList.Add(PlayList.Count.ToString());
+
             foreach (MediaElement_GG item in PlayList)
                 writeList.Add(item.Path);
+
             writeList.Add(PlayingIndex.ToString());
+
+            // ver 0.1.3 이후
+            _position = media.Position.Ticks;
+
+            writeList.Add(_position.ToString());
 
             try
             {
-                using (System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Create, System.IO.FileAccess.Write))
+                using (System.IO.FileStream fs = new System.IO.FileStream(PlayListPath, System.IO.FileMode.Create, System.IO.FileAccess.Write))
                 {
                     dcjs.WriteObject(fs, writeList);
                 }
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message, PROGRAM_NAME);
             }
         }
 
@@ -448,10 +507,10 @@ namespace MusicPlayer_GG
         {
             DataContractJsonSerializer dcjs = new DataContractJsonSerializer(typeof(List<string>));
 
-            if (string.IsNullOrWhiteSpace(fileName))
-                fileName = "lately.gpl";
-
             List<string> readList = new List<string>();
+            PlayList = new List<MediaElement_GG>();
+
+            PlayListPath = fileName;
 
             try
             {
@@ -460,18 +519,79 @@ namespace MusicPlayer_GG
                     readList = dcjs.ReadObject(fs) as List<string>;
                 }
 
-                for (int i = 0; i < readList.Count - 1; i++)
-                    PlayList.Add(new MusicElement(readList[i]));
-                PlayingIndex = int.Parse(readList[readList.Count - 1]);
+                if (int.TryParse(readList[0], out int countMusic) == false)
+                {
+                    for (int i = 0; i < readList.Count - 1; i++)
+                    {
+                        PlayList.Add(new MusicElement(readList[i]));
+                    }
+
+                    PlayingIndex = Convert.ToInt32(readList[readList.Count - 1]);
+                }
+                else
+                {
+                    for (int i = 1; i <= countMusic; i++)
+                    {
+                        PlayList.Add(new MusicElement(readList[i]));
+                    }
+
+                    PlayingIndex = Convert.ToInt32(readList[countMusic + 1]);
+                    _position = Convert.ToInt64(readList[countMusic + 2]);
+                }
             }
             catch (Exception e)
             {
                 if (e is System.IO.FileNotFoundException)
                     return;
                 else
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, PROGRAM_NAME);
             }
 
+            PlayList_Loaded(PlayList, null);
+        }
+        private static void InsertPlayList(string fileName, int index = -1)
+        {
+            DataContractJsonSerializer dcjs = new DataContractJsonSerializer(typeof(List<string>));
+
+            List<string> readList = new List<string>();
+
+            if (index < 0)
+                index = PlayList.Count;
+
+            try
+            {
+                using (System.IO.FileStream fs = new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                {
+                    readList = dcjs.ReadObject(fs) as List<string>;
+                }
+
+                var musicList = new List<MusicElement>();
+                if (int.TryParse(readList[0], out int countMusic) == false)
+                {
+                    for (int i = 0; i < readList.Count - 1; i++)
+                    {
+                        musicList.Add(new MusicElement(readList[i]));
+                    }
+
+                    PlayList.InsertRange(index, musicList);
+                }
+                else
+                {
+                    for (int i = 1; i <= countMusic; i++)
+                    {
+                        musicList.Add(new MusicElement(readList[i]));
+                    }
+
+                    PlayList.InsertRange(index, musicList);
+                }
+            }
+            catch (Exception e)
+            {
+                if (e is System.IO.FileNotFoundException)
+                    return;
+                else
+                    MessageBox.Show(e.Message, PROGRAM_NAME);
+            }
         }
 
         #endregion
