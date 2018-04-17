@@ -27,7 +27,7 @@ namespace MusicPlayer_GG
         private static Random rand = new Random((int)DateTime.Now.Ticks);
         private static double _volume;
         private static bool isPause, isPlay;
-        // isPlay는 명확히 사용되는 곳이 없으나 제거하기에는 복잡해지기에 우선 유지
+        // isPlay는 명확히 사용되는 곳이 없으나 제거하기에는 복잡해지기에 우선 유지 - 버전 1 될 시 제거
 
         private static long _position;
 
@@ -411,6 +411,8 @@ namespace MusicPlayer_GG
 
         #region File Control
 
+            #region Setting
+
         private static void SaveSetting()
         {
             DataContractJsonSerializer dcjs = new DataContractJsonSerializer(typeof(List<object>));
@@ -468,6 +470,10 @@ namespace MusicPlayer_GG
             }
 
         }
+
+            #endregion
+
+            #region PlayList
 
         private static void SavePlayList(string fileName = null)
         {
@@ -542,13 +548,17 @@ namespace MusicPlayer_GG
             catch (Exception e)
             {
                 if (e is System.IO.FileNotFoundException)
+                { // 재생목록 파일이 없을 경우 ?
+                    // LoadPlayList("lately.gpl"); lately.gpl로 할 것인가?
                     return;
+                }
                 else
                     MessageBox.Show(e.Message, PROGRAM_NAME);
             }
 
             PlayList_Loaded(PlayList, null);
         }
+
         private static void InsertPlayList(string fileName, int index = -1)
         {
             DataContractJsonSerializer dcjs = new DataContractJsonSerializer(typeof(List<string>));
@@ -593,6 +603,8 @@ namespace MusicPlayer_GG
                     MessageBox.Show(e.Message, PROGRAM_NAME);
             }
         }
+
+            #endregion  
 
         #endregion
     }
