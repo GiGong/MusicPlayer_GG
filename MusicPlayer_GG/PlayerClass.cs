@@ -28,8 +28,9 @@ namespace MusicPlayer_GG
         private static double _volume;
         private static bool isPause, isPlay;
         // isPlay는 명확히 사용되는 곳이 없으나 제거하기에는 복잡해지기에 우선 유지 - 버전 1 될 시 제거
-
         private static long _position;
+
+        public static double Top, Left, Width, Height;
 
         public static bool isShuffle, isRepeatOne;
 
@@ -133,6 +134,7 @@ namespace MusicPlayer_GG
             isShuffle = false;
             isRepeatOne = false;
             _position = 0;
+            Top = Left = Width = Height = 100;
 
             PlayList = new List<MediaElement_GG>();
             PlayListPath = "lately.gpl";
@@ -140,10 +142,7 @@ namespace MusicPlayer_GG
             media.MediaOpened += Event_Opened;
             media.MediaEnded += MediaEnded;
             media.MediaFailed += Event_Failed;
-        }
 
-        public static void Event_Loaded(object sender, EventArgs e)
-        {
             LoadSetting();
             LoadPlayList(PlayListPath);
         }
@@ -420,7 +419,7 @@ namespace MusicPlayer_GG
             // List<object> writeList = new List<object>() { isPause, isPlay, isShuffle, isRepeatOne, _volume.ToString("F2") };
             // 0.1.3 까지 저장 방식
 
-            List<object> writeList = new List<object>() { isPause, isPlay, isShuffle, isRepeatOne, _volume.ToString("F2"), PlayListPath };
+            List<object> writeList = new List<object>() { isPause, isPlay, isShuffle, isRepeatOne, _volume.ToString("F2"), PlayListPath, Top, Left, Width, Height };
 
             try
             {
@@ -456,9 +455,14 @@ namespace MusicPlayer_GG
                 //Volume = double.Parse(readList[4].ToString());
                 Volume = Convert.ToDouble(readList[4]);
 
+                // 0.1.3 다음 버전을 위한 Load
                 if (readList.Count > 5)
                 {
                     PlayListPath = readList[5].ToString();
+                    Top = Convert.ToDouble(readList[6]);
+                    Left = Convert.ToDouble(readList[7]);
+                    Width = Convert.ToDouble(readList[8]);
+                    Height = Convert.ToDouble(readList[9]);
                 }
             }
             catch (Exception e)

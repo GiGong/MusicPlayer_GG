@@ -146,17 +146,11 @@ namespace MusicPlayer_GG
             InitializeComponent();
 
             this.Title = Player.PROGRAM_NAME;
-        }
 
-        /// <summary>
-        /// MainWindow 첫 로드시, 관련 작업
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Player Load (설정, 재생목록 Load)
-            Player.Event_Loaded(sender, e);
+            this.Top = Player.Top;
+            this.Left = Player.Left;
+            this.Width = Player.Width;
+            this.Height = Player.Height;
 
             // Timer 설정
             _timer.Interval = TimeSpan.FromMilliseconds(500);
@@ -177,6 +171,18 @@ namespace MusicPlayer_GG
 
             // Data Binding
             this.DataContext = this;
+        }
+
+        /// <summary>
+        /// MainWindow 첫 로드시, 관련 작업
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Player Load (설정, 재생목록 Load)
+            // Player의 static 생성자로 이동 => 자동 실행
+            // Player.Event_Loaded(sender, e);
 
             // Player가 Load한 값 설정
             listPlayDragDrop.SetSource(Player.PlayList);
@@ -214,6 +220,7 @@ namespace MusicPlayer_GG
 #if DEBUG
                 case Key.Back:
                     // ToastMessage("Test Toast 메시지 입니다. 헤헤 히 후");
+                    MessageBox.Show("" + Top + " " + Left);
                     break;
 #endif
 
@@ -296,6 +303,11 @@ namespace MusicPlayer_GG
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            Player.Top = this.Top;
+            Player.Left = this.Left;
+            Player.Width = this.Width;
+            Player.Height = this.Height;
+
             Player.Event_Closed(sender, e);
         }
 
