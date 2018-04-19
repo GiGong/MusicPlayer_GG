@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" >
+             mc:Ignorable="d" 
+             x:Name="control">
     <UserControl.Resources>
         <ContextMenu x:Key="listItemContextMenu">
             <MenuItem Header="재생" Click="Event_Play"/>
@@ -11,9 +12,10 @@
             <MenuItem Header="제거" Click="Event_Delete"/>
         </ContextMenu>
     </UserControl.Resources>
-    
+
     <ListBox x:Name="box" SelectionMode="Extended" AllowDrop="True"
-             
+             Foreground="{Binding Foreground}"
+             Background="{Binding Background}"
                 Drop="ListBox_Drop"
                 DragOver="ListBox_DragOver"
              
@@ -34,7 +36,7 @@
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="BorderBrush" Value="Gray"/>
                 <Setter Property="Padding" Value="2"/>
-                
+
                 <EventSetter Event="DragOver" Handler="ListBoxItem_DragOver"/>
                 <EventSetter Event="DragLeave" Handler="ListBoxItem_DragLeave"/>
                 <EventSetter Event="PreviewMouseMove" Handler="ListBoxItem_PreviewMouseMove"/>

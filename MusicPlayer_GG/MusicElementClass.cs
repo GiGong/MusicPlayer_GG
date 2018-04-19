@@ -14,50 +14,43 @@ namespace MusicPlayer_GG
     [DataContract]
     class MusicElement : MediaElement_GG
     {
-        string fullPath;
-        string artist, title;
-        BitmapImage albumArt = null;
-
         [DataMember]
-        public override string Path
-        {
-            get { return fullPath; }
-            set { fullPath = value; }
-        }
+        public override string Path { get; set; }
 
-        public string Artist
-        {
-            get { return artist; }
-        }
-
-        public string Title
-        {
-            get { return title; }
-        }
+        private string Artist { get; set; }
+        private string Title { get; set; }
 
         public override string Information
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(artist) == true || string.IsNullOrWhiteSpace(title) == true)
-                    return System.IO.Path.GetFileNameWithoutExtension(fullPath);
+                if (string.IsNullOrWhiteSpace(Artist) || string.IsNullOrWhiteSpace(Title))
+                {
+                    return FileName;
+                }
                 else
-                    return artist + " - " + title;
+                {
+                    return Artist + " - " + Title;
+                }
             }
         }
 
-        public BitmapImage AlbumArt
-        {
-            get { return albumArt; }
-        }
+        public override string FileName { get { return System.IO.Path.GetFileNameWithoutExtension(Path); } }
 
+        public BitmapImage AlbumArt { get; private set; } = null;
 
         public MusicElement(string full)
         {
-            fullPath = full;
+            Path = full;
 
             if (System.IO.Path.GetExtension(full).ToLowerInvariant() == ".mp3")
+            {
                 GetTagNotTagLib(full);
+                if (string.IsNullOrWhiteSpace(Title))
+                {
+                    Title = Information;
+                }
+            }
         }
 
 
@@ -202,15 +195,15 @@ namespace MusicPlayer_GG
                         {
                             MemoryStream ms = new MemoryStream(data, i, data.Length - i);
 
-                            albumArt = new BitmapImage();
-                            albumArt.BeginInit();
-                            albumArt.StreamSource = ms;
-                            albumArt.EndInit();
+                            AlbumArt = new BitmapImage();
+                            AlbumArt.BeginInit();
+                            AlbumArt.StreamSource = ms;
+                            AlbumArt.EndInit();
                         }
                         catch (System.Exception e)
                         {
                             System.Console.WriteLine(e.Message);
-                            albumArt = null;
+                            AlbumArt = null;
                         }
                     }
                     else if (StrframeID == "TIT2")
@@ -218,14 +211,14 @@ namespace MusicPlayer_GG
                         byte[] data = new byte[FrameSize];
                         br.Read(data, 0, data.Length);
 
-                        title = ConvertToString(data);
+                        Title = ConvertToString(data);
                     }
                     else if (StrframeID == "TPE1")
                     {
                         byte[] data = new byte[FrameSize];
                         br.Read(data, 0, data.Length);
 
-                        artist = ConvertToString(data);
+                        Artist = ConvertToString(data);
                     }
                     else
                     {

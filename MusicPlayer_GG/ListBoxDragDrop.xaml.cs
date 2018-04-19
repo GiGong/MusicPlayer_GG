@@ -13,7 +13,7 @@ namespace GiGong
     public partial class ListBoxDragDrop : UserControl
     {
         List<MediaElement_GG> listDrag;
-
+        
         bool isDrag = false;
         bool isOut = true;
         bool isKeyDown = false;
@@ -25,12 +25,15 @@ namespace GiGong
             get { return box; }
             set { box = value; }
         }
-
+        
+        
         internal List<MediaElement_GG> ListSource { get; private set; }
 
         public ListBoxDragDrop()
         {
             InitializeComponent();
+
+            DataContext = this;
 
             box.KeyDown += (s, e) => { isKeyDown = true; };
             box.KeyUp += (s, e) => { isKeyDown = false; };

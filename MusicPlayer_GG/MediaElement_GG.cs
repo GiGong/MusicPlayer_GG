@@ -11,8 +11,10 @@ namespace MusicPlayer_GG
         [System.Runtime.Serialization.DataMember]
         abstract public string Path { get; set; }
 
-        abstract public string Information { get; }
+        abstract public string FileName { get; }
 
+        abstract public string Information { get; }
+        
 
         abstract public override string ToString();
 

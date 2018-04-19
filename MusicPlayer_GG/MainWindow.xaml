@@ -13,8 +13,17 @@
         mc:Ignorable="d"
         Title="MusicPlayer_GG" Height="600" Width="450" MinWidth="450"
         Loaded="Window_Loaded" KeyDown="Window_KeyDown" Closing="Window_Closing"
-        FontFamily="Fonts/#NanumGothic">
-    <Grid>
+        FontFamily="Fonts/#NanumGothic"
+    >
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#FF434B56">
         <DockPanel VerticalAlignment="Top" Height="20">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="파일">
@@ -68,7 +77,7 @@
         <CheckBox x:Name="cbxShuffle" IsChecked="{Binding IsShuffle}" Content="임의 재생" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,155,20,0"/>
         <CheckBox x:Name="cbsRepeatOne" IsChecked="{Binding IsRepeatOnce}" Content="한곡 반복" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,172,20,0"/>
 
-        <GiGong:ListBoxDragDrop x:Name="listPlayDragDrop" Margin="20,240,20,20"/>
+        <GiGong:ListBoxDragDrop x:Name="listPlayDragDrop" Margin="20,240,20,20" Background="#FF606F82" Foreground="White"/>
 
         <Grid VerticalAlignment="Top" Margin="125,155,107,0" MinWidth="160" MaxWidth="160" MinHeight="32" MaxHeight="32">
             <Grid.ColumnDefinitions>

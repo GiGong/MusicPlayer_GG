@@ -97,7 +97,7 @@ namespace MusicPlayer_GG
         {
             get
             {
-                return (PlayList[PlayingIndex] as MusicElement).Title;
+                return (PlayList[PlayingIndex] as MusicElement);
             }
         }
 
@@ -105,7 +105,7 @@ namespace MusicPlayer_GG
         {
             get
             {
-                return PlayList[PlayingIndex];
+                return PlayList[PlayingIndex].FileName;
             }
         }
 
