@@ -11,8 +11,8 @@
         xmlns:local="clr-namespace:MusicPlayer_GG"
         xmlns:GiGong="clr-namespace:GiGong" x:Class="MusicPlayer_GG.MainWindow"
         mc:Ignorable="d"
-        Title="MusicPlayer_GG" Height="600" Width="450" MinWidth="450"
-        Loaded="Window_Loaded" KeyDown="Window_KeyDown" Closing="Window_Closing"
+        Title="MusicPlayer_GG" Height="600" Width="450" MinWidth="450" MinHeight="350"
+        Loaded="Window_Loaded" KeyDown="Window_KeyDown" Closing="Window_Closing" LocationChanged="Window_LocationChanged"
         FontFamily="Fonts/#NanumGothic"
     >
     <Window.Resources>

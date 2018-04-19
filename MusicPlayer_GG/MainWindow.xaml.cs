@@ -141,6 +141,8 @@ namespace MusicPlayer_GG
 
         #endregion
 
+        #region Constructor
+
         public MainWindow()
         {
             InitializeComponent();
@@ -173,6 +175,10 @@ namespace MusicPlayer_GG
             this.DataContext = this;
         }
 
+        #endregion
+
+        #region Window Event
+
         /// <summary>
         /// MainWindow 첫 로드시, 관련 작업
         /// </summary>
@@ -187,19 +193,41 @@ namespace MusicPlayer_GG
             // Player가 Load한 값 설정
             listPlayDragDrop.SetSource(Player.PlayList);
             ListPlay.SelectedIndex = Player.PlayingIndex;
+            
+            // this.LocationChanged += Window_LocationChanged;
         }
 
-        /// <summary>
-        /// Timer의 주기마다 현재 재생 시간을 업데이트
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _timer_Tick(object sender, EventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
-            lblTime.Content = Player.Position.ToString(@"mm\ \:\ ss") + " / " + _maxTime;
+            Player.Top = this.Top;
+            Player.Left = this.Left;
+            Player.Width = this.Width;
+            Player.Height = this.Height;
 
-            if (isDown == false)
-                sdrPlay.Value = (int)Player.Position.TotalSeconds;
+            Player.Event_Closed(sender, e);
+        }
+
+
+        private void Window_LocationChanged(object sender, EventArgs e)
+        {
+            /* 윈도우를 화면 가장자리에 가져갔을 때 가장자리에 붙는 기능
+             * 윈도우 style = none 이여야 원활히 가능하여 보류
+            var screen = SystemParameters.WorkArea;
+            //var Right = SystemParameters.FullPrimaryScreenWidth;
+            if (this.Top <= 10)
+            {
+                this.Top = 0;
+            }
+
+            if (-10 <=this.Left && this.Left <= 10)
+            {
+                this.Left = 0;
+            }
+            else if (-10 <= screen.Right - (this.Left + this.Width) && screen.Right - (this.Left + this.Width) <= 10)
+            {
+                this.Left = screen.Right - this.Width;
+            }
+            */
         }
 
         /// <summary>
@@ -270,6 +298,21 @@ namespace MusicPlayer_GG
             }
         }
 
+        #endregion
+
+        /// <summary>
+        /// Timer의 주기마다 현재 재생 시간을 업데이트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            lblTime.Content = Player.Position.ToString(@"mm\ \:\ ss") + " / " + _maxTime;
+
+            if (isDown == false)
+                sdrPlay.Value = (int)Player.Position.TotalSeconds;
+        }
+
         /// <summary>
         /// 프로그램 정보 윈도우 호출
         /// </summary>
@@ -298,17 +341,6 @@ namespace MusicPlayer_GG
                 Volume += 2;
             else
                 Volume -= 2;
-        }
-
-
-        private void Window_Closing(object sender, CancelEventArgs e)
-        {
-            Player.Top = this.Top;
-            Player.Left = this.Left;
-            Player.Width = this.Width;
-            Player.Height = this.Height;
-
-            Player.Event_Closed(sender, e);
         }
 
         /// <summary>
