@@ -46,7 +46,7 @@ namespace MusicPlayer_GG
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ggmp.mainWindow = this;
+            ggmp.MainWindow = this;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

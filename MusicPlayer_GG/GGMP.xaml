@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MusicPlayer_GG"
              mc:Ignorable="d" 
              xmlns:GiGong="clr-namespace:GiGong" 
-             Loaded="GGMP_Loaded" KeyDown="GGMP_KeyDown">
+             Loaded="GGMP_Loaded">
     
     <Grid Background="#FF434B56">
         <Grid VerticalAlignment="Top" Height="20">

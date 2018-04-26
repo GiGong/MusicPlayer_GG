@@ -43,6 +43,8 @@ namespace MusicPlayer_GG
         /// 마우스가 시간 탐색 Slider를 눌렀는지 확인
         /// </summary>
         private bool isDown = false;
+        private MainWindow _mainWindow;
+
         // private static bool isToast = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -51,7 +53,15 @@ namespace MusicPlayer_GG
 
         #region ----Property----
 
-        public MainWindow mainWindow { get; set; }
+        public MainWindow MainWindow
+        {
+            get => _mainWindow;
+            set
+            {
+                _mainWindow = value;
+                _mainWindow.KeyDown += GGMP_KeyDown;
+            }
+        }
 
         /// <summary>
         /// 임의 재생 할 것인가
@@ -166,7 +176,6 @@ namespace MusicPlayer_GG
             listPlayDragDrop.SetSource(Player.PlayList);
             ListPlay.SelectedIndex = Player.PlayingIndex;
         }
-
 
         /// <summary>
         /// 단축키를 입력 받음
@@ -289,7 +298,7 @@ namespace MusicPlayer_GG
         /// <param name="e"></param>
         private void Event_Exit(object sender, RoutedEventArgs e)
         {
-            mainWindow.Close();
+            MainWindow.Close();
         }
 
         #endregion
@@ -661,6 +670,6 @@ namespace MusicPlayer_GG
         */
 
         #endregion
-        
+
     }
 }
