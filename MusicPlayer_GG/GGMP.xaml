@@ -10,21 +10,29 @@
     
     <Grid Background="#FF434B56">
         <Grid VerticalAlignment="Top" Height="20">
-            <Menu Background="Transparent" Foreground="White">
-                <MenuItem Header="파일">
+            <Menu Background="Transparent">
+                <Menu.Resources>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="Foreground" Value="Black"/>
+                    </Style>
+                    <Style TargetType="MenuItem" x:Key="mainItem">
+                        <Setter Property="Foreground" Value="White"/>
+                    </Style>
+                </Menu.Resources>
+                <MenuItem Header="파일" Style="{StaticResource mainItem}">
                     <MenuItem Header="추가" Click="Event_Add" InputGestureText="Insert"/>
                     <MenuItem Header="제거" Click="Event_Delete" InputGestureText="Delete"/>
                     <Separator />
                     <MenuItem Header="종료" Click="Event_Exit" InputGestureText="Alt + F4" />
                 </MenuItem>
-                <MenuItem Header="음악" >
+                <MenuItem Header="음악" Style="{StaticResource mainItem}">
                     <MenuItem Header="재생" Click="Event_Play" InputGestureText="Enter"/>
                     <MenuItem Header="일시정지" Click="Event_Pause" InputGestureText="Space"/>
                     <MenuItem Header="정지" Click="Event_Stop" InputGestureText="ESC"/>
                     <MenuItem Header="이전곡" Click="Event_Previous" InputGestureText="PageUp"/>
                     <MenuItem Header="다음곡" Click="Event_Next" InputGestureText="PageDown"/>
                 </MenuItem>
-                <MenuItem Header="재생목록" >
+                <MenuItem Header="재생목록" Style="{StaticResource mainItem}">
                     <MenuItem Header="{Binding PlayListName}" IsEnabled="False"/>
                     <Separator/>
                     <MenuItem Header="새로 만들기" Click="Event_PlayListNew"/>
@@ -33,7 +41,7 @@
                     <MenuItem Header="저장" Click="Event_PlayListSave"/>
                     <MenuItem Header="다른 이름으로 저장" Click="Event_PlayListSaveAs"/>
                 </MenuItem>
-                <MenuItem Header="지원" >
+                <MenuItem Header="지원" Style="{StaticResource mainItem}">
                     <MenuItem Header="도움말" InputGestureText="F1" IsEnabled="False"/>
                     <Separator />
                     <MenuItem Header="MusicPlayer_GG 정보" Click="Information_Click"/>
@@ -45,6 +53,7 @@
         <Label x:Name="lblVol" FontSize="12" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="20,180,0,0" HorizontalAlignment="Left" Width="100" VerticalAlignment="Top"/>
 
         <Image x:Name="imgEmpty" Source="Resources\Gigong.png" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="10,30,0,0" OpacityMask="#CC000000"/>
+        <Rectangle Fill="#FFE0E0D8" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="10,30,0,0"/>
         <Image x:Name="imgArt" HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Width="100" Margin="10,30,0,0" />
 
         <Label FontSize="20" FontWeight="Bold" VerticalAlignment="Top" Margin="140,55,20,0">
