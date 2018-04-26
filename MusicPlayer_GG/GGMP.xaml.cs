@@ -131,7 +131,7 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region Constructor
+        #region ----Constructor----
 
         public GGMP()
         {
@@ -159,7 +159,7 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region GGMP Event
+        #region ----GGMP Event----
 
         /// <summary>
         /// GGMP 첫 로드시, 관련 작업
@@ -246,7 +246,7 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region Event
+        #region ----Event----
 
         /// <summary>
         /// Timer의 주기마다 현재 재생 시간을 업데이트
