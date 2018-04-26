@@ -49,7 +49,7 @@ namespace MusicPlayer_GG
 
             this.Top = Player.Top;
             this.Left = Player.Left;
-            
+
             this.Width = Player.Width;
             this.Height = Player.Height;
 
@@ -59,7 +59,7 @@ namespace MusicPlayer_GG
         #endregion
 
         #region ----Window Event Handler----
-        
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ggmp.MainWindow = this;
@@ -77,26 +77,31 @@ namespace MusicPlayer_GG
 
         private void Window_LocationChanged(object sender, EventArgs e)
         {
-            /* 윈도우를 화면 가장자리에 가져갔을 때 가장자리에 붙는 기능
-             * 윈도우 style = none 이여야 원활히 가능하여 보류
-            var screen = SystemParameters.WorkArea;
-            //var Right = SystemParameters.FullPrimaryScreenWidth;
+            int sum = 0;
+            int margin = 10;
+
             if (this.Top <= 10)
             {
                 this.Top = 0;
             }
 
-            if (-10 <=this.Left && this.Left <= 10)
+            foreach (var item in screens)
             {
-                this.Left = 0;
+                int term = item.WorkingArea.Width;
+                sum += term;
+                if (sum - term - margin <= this.Left && this.Left <= sum - term + margin)
+                {
+                    this.Left = sum - term;
+                    break;
+                }
+                else if (sum - margin <= this.Left + this.Width && this.Left + this.Width <= sum + margin)
+                {
+                    this.Left = sum - this.Width;
+                    break;
+                }
             }
-            else if (-10 <= screen.Right - (this.Left + this.Width) && screen.Right - (this.Left + this.Width) <= 10)
-            {
-                this.Left = screen.Right - this.Width;
-            }
-            */
 
-            int sum = 0;
+            sum = 0;
             foreach (var item in screens)
             {
                 sum += item.WorkingArea.Width;

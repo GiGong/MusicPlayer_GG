@@ -41,6 +41,7 @@
                 <EventSetter Event="DragLeave" Handler="ListBoxItem_DragLeave"/>
                 <EventSetter Event="PreviewMouseMove" Handler="ListBoxItem_PreviewMouseMove"/>
                 <EventSetter Event="MouseEnter" Handler="ListBoxItem_MouseEnter"/>
+
             </Style>
         </ListBox.ItemContainerStyle>
     </ListBox>
