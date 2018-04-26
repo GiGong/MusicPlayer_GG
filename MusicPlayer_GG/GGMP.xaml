@@ -10,7 +10,7 @@
     
     <Grid Background="#FF434B56">
         <Grid VerticalAlignment="Top" Height="20">
-            <Menu>
+            <Menu Background="Transparent" Foreground="White">
                 <MenuItem Header="파일">
                     <MenuItem Header="추가" Click="Event_Add" InputGestureText="Insert"/>
                     <MenuItem Header="제거" Click="Event_Delete" InputGestureText="Delete"/>
