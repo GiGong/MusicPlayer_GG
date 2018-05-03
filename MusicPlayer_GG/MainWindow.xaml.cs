@@ -80,7 +80,7 @@ namespace MusicPlayer_GG
             int sum = 0;
             int margin = 10;
 
-            if (this.Top <= 10)
+            if (-margin <= this.Top && this.Top <= margin)
             {
                 this.Top = 0;
             }

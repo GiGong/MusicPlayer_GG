@@ -204,9 +204,11 @@ namespace MusicPlayer_GG
                     Player.MediaPause();
                     break;
 
+                /*
                 case Key.Escape:
                     Player.MediaStop();
                     break;
+                */
 
                 case Key.PageUp:
                     Player.MediaPrevious();
@@ -246,7 +248,7 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region ----Event----
+        #region ----Etc. Event----
 
         /// <summary>
         /// Timer의 주기마다 현재 재생 시간을 업데이트
