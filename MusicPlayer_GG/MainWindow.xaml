@@ -12,7 +12,7 @@
         x:Class="MusicPlayer_GG.MainWindow"
         mc:Ignorable="d"
         Title="MusicPlayer_GG" Height="600" Width="450" MinWidth="450" MinHeight="350"
-        WindowStyle="None" ResizeMode="CanMinimize" 
+        WindowStyle="None" ResizeMode="CanResize"
         Loaded="Window_Loaded" Closing="Window_Closing" LocationChanged="Window_LocationChanged" StateChanged="Window_StateChanged"
         FontFamily="Fonts/#NanumGothic"
     >
@@ -24,9 +24,9 @@
             <Setter Property="Foreground" Value="White"/>
         </Style>
     </Window.Resources>
-    <Border Name="main" BorderThickness="1" BorderBrush="Black" Margin="0">
+    <Border Name="main" BorderThickness="1" BorderBrush="Black" Margin="0" Background="#FF434B56" >
         <DockPanel>
-            <Border Name="border" DockPanel.Dock="Top" Height="35" VerticalAlignment="Top" Background="#FF434B56">
+            <Border Name="border" DockPanel.Dock="Top" Height="35" VerticalAlignment="Top" Background="Transparent">
                 <!-- Title Bar Area -->
                 <Grid>
                     <Label Foreground="White" VerticalContentAlignment="Center" Margin="10,0,105,0" PreviewMouseDown="System_MouseDown" PreviewMouseMove="System_MouseMove">
@@ -112,9 +112,9 @@
                     </Grid>
                 </Grid>
             </Border>
-            <Grid DockPanel.Dock="Bottom" Panel.ZIndex="-1">
+            <Grid x:Name="gridContent" DockPanel.Dock="Bottom" Panel.ZIndex="-1">
                 <!-- Content Area -->
-                <local:GGMP x:Name="ggmp"/>
+                <local:GGMP x:Name="ggmp" Width="{Binding Width,ElementName=gridContent}" Height="{Binding Height,ElementName=gridContent}"/>
             </Grid>
         </DockPanel>
     </Border>

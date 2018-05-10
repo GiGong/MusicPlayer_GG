@@ -5,11 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MusicPlayer_GG"
              mc:Ignorable="d" 
-             xmlns:GiGong="clr-namespace:GiGong" 
+             xmlns:GiGong="clr-namespace:GiGong"
+             Width="448" Height="563"
              Loaded="GGMP_Loaded">
     <Grid Background="#FF434B56">
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="IsTabStop" Value="False"/>
+            </Style>
+        </Grid.Resources>
         <Grid VerticalAlignment="Top" Height="20">
-            <Menu Background="Transparent">
+            <Menu Background="Transparent" Margin="10,-5,0,0">
                 <Menu.Resources>
                     <Style TargetType="MenuItem">
                         <Setter Property="Foreground" Value="Black"/>
@@ -51,9 +61,9 @@
         <Label x:Name="lblTime" Content="" FontSize="12" Height="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxWidth="160" Margin="91,210,91,0" VerticalAlignment="Top"/>
         <Label x:Name="lblVol" FontSize="12" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="20,175,0,0" HorizontalAlignment="Left" Width="100" VerticalAlignment="Top"/>
 
-        <Image x:Name="imgEmpty" Source="Resources\Gigong.png" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="10,30,0,0" OpacityMask="#CC000000"/>
-        <Rectangle Fill="White" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="10,30,0,0" Visibility="Hidden"/>
-        <Image x:Name="imgArt" HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Width="100" Margin="10,30,0,0" />
+        <Image x:Name="imgEmpty" Source="Resources\Gigong.png" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="20,30,0,0" OpacityMask="#CC000000"/>
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="20,30,0,0" Visibility="Hidden"/>
+        <Image x:Name="imgArt" HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Width="100" Margin="20,30,0,0" />
 
         <Label FontSize="20" FontWeight="Bold" VerticalAlignment="Top" Margin="140,55,20,0">
             <TextBlock x:Name="textTitle" TextTrimming="CharacterEllipsis"/>
@@ -62,12 +72,15 @@
             <TextBlock x:Name="textMusic" TextTrimming="CharacterEllipsis"/>
         </Label>
 
+        <Button x:Name="btnVol" Margin="60,142,0,0" HorizontalAlignment="Left" Width="16" VerticalAlignment="Top" Height="16" Click="Event_Mute" Visibility="Hidden">
+        </Button>
+
         <Slider x:Name="sdrPlay" Value="0" Minimum="0"  Height="20" VerticalAlignment="Top" Margin="20,200,20,0" Focusable="False"
                 PreviewMouseLeftButtonDown="SdrPlay_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="SdrPlay_PreviewMouseLeftButtonUp" MouseWheel="SdrPlay_MouseWheel"
-                Style="{DynamicResource SliderStyle1}"/>
+                Style="{DynamicResource SliderPlay}"/>
         <Slider x:Name="sdrVol" Minimum="0" Maximum="100" Value="{Binding Volume, Mode=TwoWay}" IsSnapToTickEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,165,0,0" Width="100" Focusable="False"
                 MouseWheel="SdrVol_MouseWheel"
-                Style="{DynamicResource SliderStyle1}"/>
+                Style="{DynamicResource SliderVolume}"/>
 
         <Image x:Name="imgVol" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18" Margin="2,163,0,0" />
 
@@ -77,13 +90,6 @@
         <GiGong:ListBoxDragDrop x:Name="listPlayDragDrop" Margin="20,240,20,20" Background="#FF606F82" Foreground="White"/>
 
         <Grid VerticalAlignment="Top" Margin="115,155,97,0" MinWidth="180" MaxWidth="180" MinHeight="32" MaxHeight="32">
-            <Grid.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="BorderBrush" Value="Transparent"/>
-                    <Setter Property="Padding" Value="0"/>
-                </Style>
-            </Grid.Resources>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />

@@ -246,6 +246,11 @@ namespace MusicPlayer_GG
             }
         }
 
+        private void Event_Mute(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         #endregion
 
         #region ----Etc. Event----
