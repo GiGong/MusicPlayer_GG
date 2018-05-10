@@ -89,6 +89,23 @@ namespace MusicPlayer_GG
             }
         }
 
+        public bool IsMuted
+        {
+            get { return Player.IsMuted; }
+            set
+            {
+                Player.IsMuted = value;
+                if (value)
+                {
+                    canvasMute.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    canvasMute.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
         /// <summary>
         /// Volume값
         /// double을 int형으로 변환
@@ -175,6 +192,8 @@ namespace MusicPlayer_GG
             // Player가 Load한 값 설정
             listPlayDragDrop.SetSource(Player.PlayList);
             ListPlay.SelectedIndex = Player.PlayingIndex;
+
+            IsMuted = Player.IsMuted;
         }
 
         /// <summary>
@@ -248,7 +267,7 @@ namespace MusicPlayer_GG
 
         private void Event_Mute(object sender, RoutedEventArgs e)
         {
-
+            IsMuted = !IsMuted;
         }
 
         #endregion

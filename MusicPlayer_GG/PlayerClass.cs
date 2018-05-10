@@ -73,6 +73,8 @@ namespace MusicPlayer_GG
             }
         }
 
+        public static bool IsMuted { get => media.IsMuted; set => media.IsMuted = value; }
+
         public static TimeSpan Position
         {
             get { return media.Position; }
@@ -410,7 +412,7 @@ namespace MusicPlayer_GG
 
         #region File Control
 
-            #region Setting
+        #region Setting
 
         private static void SaveSetting()
         {
@@ -475,9 +477,9 @@ namespace MusicPlayer_GG
 
         }
 
-            #endregion
+        #endregion
 
-            #region PlayList
+        #region PlayList
 
         private static void SavePlayList(string fileName = null)
         {
@@ -608,7 +610,7 @@ namespace MusicPlayer_GG
             }
         }
 
-            #endregion  
+        #endregion
 
         #endregion
     }

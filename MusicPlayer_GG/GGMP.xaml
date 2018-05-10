@@ -72,7 +72,24 @@
             <TextBlock x:Name="textMusic" TextTrimming="CharacterEllipsis"/>
         </Label>
 
-        <Button x:Name="btnVol" Margin="60,142,0,0" HorizontalAlignment="Left" Width="16" VerticalAlignment="Top" Height="16" Click="Event_Mute" Visibility="Hidden">
+        <Button x:Name="btnVol" Margin="62,145,0,0" HorizontalAlignment="Left" Width="16" VerticalAlignment="Top" Height="16" Click="Event_Mute" BorderThickness="0">
+            <Canvas Width="100" Height="100" RenderTransformOrigin="0,0">
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="0.16" ScaleY="0.16"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+                <Rectangle Fill="#FFE0E0D8" Height="45" StrokeThickness="0" Canvas.Top="27.5" Width="18"/>
+                <Path Data="M96,12 L38,54 38,144 96,187 z" Fill="#FFE0E0D8" Height="88" Canvas.Left="21" Stretch="Fill" StrokeThickness="0" Canvas.Top="6" Width="28"/>
+                <Canvas Name="canvasMute">
+                    <Path Data="M130,15 C130,15 140,25 130,35" Height="26" Canvas.Left="54" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" StrokeThickness="5" Stroke="#FFE0E0D8" Canvas.Top="37" Width="10"/>
+                    <Path Data="M130,15 C130,15 140,25 130,35" Height="52" Canvas.Left="67" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" StrokeThickness="5" Stroke="#FFE0E0D8" Canvas.Top="24" Width="15"/>
+                    <Path Data="M130,15 C130,15 140,25 130,35" Height="77.5" Canvas.Left="80" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" StrokeThickness="5" Stroke="#FFE0E0D8" Canvas.Top="12" Width="20"/>
+                </Canvas>
+            </Canvas>
         </Button>
 
         <Slider x:Name="sdrPlay" Value="0" Minimum="0"  Height="20" VerticalAlignment="Top" Margin="20,200,20,0" Focusable="False"
