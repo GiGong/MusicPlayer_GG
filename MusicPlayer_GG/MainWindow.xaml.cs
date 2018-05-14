@@ -47,6 +47,9 @@ namespace MusicPlayer_GG
         {
             InitializeComponent();
 
+            // AppDomain.CurrentDomain.UnhandledException += GGMP_UnhandledException;
+            // 유지보수를 위해 추후 추가 예정
+
             this.Title = Player.PROGRAM_NAME;
 
             this.Top = Player.Top;
@@ -204,6 +207,15 @@ namespace MusicPlayer_GG
         private void Mimimize_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+        }
+
+        #endregion
+
+        #region ---- Program Maintenance ----
+
+        private void GGMP_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        { // 유지보수를 위해 추후 추가 예정
+            throw new NotImplementedException();
         }
 
         #endregion
