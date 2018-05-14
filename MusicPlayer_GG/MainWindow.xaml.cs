@@ -71,8 +71,6 @@ namespace MusicPlayer_GG
         {
             Player.Top = this.Top;
             Player.Left = this.Left;
-            Player.Width = this.Width;
-            Player.Height = this.Height;
 
             Player.Event_Closed(sender, e);
         }
@@ -130,6 +128,15 @@ namespace MusicPlayer_GG
                 main.Margin = new Thickness(0);
                 rectMax.Visibility = Visibility.Visible;
                 rectMin.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Normal)
+            {
+                Player.Width = this.Width;
+                Player.Height = this.Height;
             }
         }
 
