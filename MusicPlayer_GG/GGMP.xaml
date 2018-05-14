@@ -38,9 +38,6 @@
                     <Style TargetType="MenuItem">
                         <Setter Property="Foreground" Value="Black"/>
                     </Style>
-                    <Style TargetType="MenuItem" x:Key="mainItem">
-                        <Setter Property="Foreground" Value="White"/>
-                    </Style>
                 </Menu.Resources>
                 <MenuItem Header="파일" Style="{StaticResource mainItem}">
                     <MenuItem Header="추가" Click="Event_Add" InputGestureText="Insert"/>
@@ -87,6 +84,14 @@
         </Label>
 
         <Button x:Name="btnVol" Margin="62,145,0,0" HorizontalAlignment="Left" Width="16" VerticalAlignment="Top" Height="16" Click="Event_Mute" BorderThickness="0">
+            <Button.Resources>
+                <Style TargetType="Path">
+                    <Setter Property="Stroke" Value="#FFE0E0D8"/>
+                </Style>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Fill" Value="#FFE0E0D8"/>
+                </Style>
+            </Button.Resources>
             <Canvas Width="100" Height="100" RenderTransformOrigin="0,0">
                 <Canvas.RenderTransform>
                     <TransformGroup>
@@ -96,12 +101,12 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </Canvas.RenderTransform>
-                <Rectangle Fill="#FFE0E0D8" Height="45" StrokeThickness="0" Canvas.Top="27.5" Width="18"/>
+                <Rectangle Height="45" StrokeThickness="0" Canvas.Top="27.5" Width="18"/>
                 <Path Data="M96,12 L38,54 38,144 96,187 z" Fill="#FFE0E0D8" Height="88" Canvas.Left="21" Stretch="Fill" StrokeThickness="0" Canvas.Top="6" Width="28"/>
                 <Canvas Name="canvasMute">
-                    <Path Data="M130,15 C130,15 140,25 130,35" Height="26" Canvas.Left="54" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" StrokeThickness="5" Stroke="#FFE0E0D8" Canvas.Top="37" Width="10"/>
-                    <Path Data="M130,15 C130,15 140,25 130,35" Height="52" Canvas.Left="67" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" StrokeThickness="5" Stroke="#FFE0E0D8" Canvas.Top="24" Width="15"/>
-                    <Path Data="M130,15 C130,15 140,25 130,35" Height="77.5" Canvas.Left="80" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" StrokeThickness="5" Stroke="#FFE0E0D8" Canvas.Top="12" Width="20"/>
+                    <Path Data="M130,15 C130,15 140,25 130,35" Height="26" Canvas.Left="54" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" StrokeThickness="5" Canvas.Top="37" Width="10"/>
+                    <Path Data="M130,15 C130,15 140,25 130,35" Height="52" Canvas.Left="67" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" StrokeThickness="5" Canvas.Top="24" Width="15"/>
+                    <Path Data="M130,15 C130,15 140,25 130,35" Height="77.5" Canvas.Left="80" StrokeStartLineCap="Round" Stretch="Fill" StrokeEndLineCap="Round" StrokeThickness="5" Canvas.Top="12" Width="20"/>
                 </Canvas>
             </Canvas>
         </Button>
@@ -121,6 +126,14 @@
         <GiGong:ListBoxDragDrop x:Name="listPlayDragDrop" Margin="20,240,20,20" Background="#FF606F82" Foreground="White"/>
 
         <Grid VerticalAlignment="Top" Margin="115,155,97,0" MinWidth="180" MaxWidth="180" MinHeight="32" MaxHeight="32">
+            <Grid.Resources>
+                <Style TargetType="Path">
+                    <Setter Property="Fill" Value="#FFE0E0D8"/>
+                </Style>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Fill" Value="#FFE0E0D8"/>
+                </Style>
+            </Grid.Resources>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
@@ -138,12 +151,12 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </Canvas.RenderTransform>
-                    <Rectangle Fill="#C8C2B6" Height="90" Canvas.Left="10" Canvas.Top="5" Width="15"/>
-                    <Path Data="M95,5 L15,50 95,95" Fill="#C8C2B6" Height="90" Canvas.Left="25" Stretch="Fill" Canvas.Top="5" Width="65"/>
+                    <Rectangle Height="90" Canvas.Left="10" Canvas.Top="5" Width="15"/>
+                    <Path Data="M95,5 L15,50 95,95" Height="90" Canvas.Left="25" Stretch="Fill" Canvas.Top="5" Width="65"/>
                 </Canvas>
             </Button>
             <Button Grid.Column="1" Margin="6" Click="Event_Stop" ToolTip="정지">
-                <Rectangle Width="18" Height="18" Fill="#C8C2B6"/>
+                <Rectangle Width="18" Height="18"/>
             </Button>
             <Button Grid.Column="2" Margin="0" Click="Event_Play" ToolTip="재생">
                 <Canvas Height="100" Width="100" Background="Transparent"  RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -155,7 +168,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </Canvas.RenderTransform>
-                    <Path Data="M5,5 L5,95 85,50" Fill="#C8C2B6" Height="100" Canvas.Left="10" Stretch="Fill" Width="80"/>
+                    <Path Data="M5,5 L5,95 85,50" Height="100" Canvas.Left="10" Stretch="Fill" Width="80"/>
                 </Canvas>
             </Button>
             <Button Grid.Column="3" Margin="6" Click="Event_Pause" ToolTip="일시 정지">
@@ -168,8 +181,8 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </Canvas.RenderTransform>
-                    <Rectangle Fill="#C8C2B6" Height="100" Canvas.Left="10" Width="30"/>
-                    <Rectangle Fill="#C8C2B6" Height="100" Canvas.Left="60" Width="30"/>
+                    <Rectangle Height="100" Canvas.Left="10" Width="30"/>
+                    <Rectangle Height="100" Canvas.Left="60" Width="30"/>
                 </Canvas>
             </Button>
             <Button Grid.Column="4" Margin="6" Click="Event_Next" ToolTip="다음 곡">
@@ -182,8 +195,8 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </Canvas.RenderTransform>
-                    <Path Data="M5,5 L5,95 85,50" Fill="#C8C2B6" Height="90" Canvas.Left="10" Stretch="Fill" Width="65" Canvas.Top="5"/>
-                    <Rectangle Fill="#C8C2B6" Height="90" Canvas.Left="75" StrokeThickness="0" Canvas.Top="5" Width="15"/>
+                    <Path Data="M5,5 L5,95 85,50" Height="90" Canvas.Left="10" Stretch="Fill" Width="65" Canvas.Top="5"/>
+                    <Rectangle Height="90" Canvas.Left="75" StrokeThickness="0" Canvas.Top="5" Width="15"/>
                 </Canvas>
             </Button>
         </Grid>
