@@ -120,12 +120,14 @@ namespace MusicPlayer_GG
             if (this.WindowState == WindowState.Maximized)
             {
                 main.BorderThickness = new Thickness(0);
+                main.Margin = new Thickness(7);
                 rectMax.Visibility = Visibility.Hidden;
                 rectMin.Visibility = Visibility.Visible;
             }
             else
             {
                 main.BorderThickness = new Thickness(1);
+                main.Margin = new Thickness(0);
                 rectMax.Visibility = Visibility.Visible;
                 rectMin.Visibility = Visibility.Hidden;
             }
@@ -198,6 +200,5 @@ namespace MusicPlayer_GG
         }
 
         #endregion
-
     }
 }

@@ -168,11 +168,6 @@
   <ItemGroup>
     <Resource Include="G.ico" />
     <Resource Include="Resources\Gigong.png" />
-    <Resource Include="Resources\next.png" />
-    <Resource Include="Resources\pause.png" />
-    <Resource Include="Resources\play.png" />
-    <Resource Include="Resources\previous.png" />
-    <Resource Include="Resources\stop.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">

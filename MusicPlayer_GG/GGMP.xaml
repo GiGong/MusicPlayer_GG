@@ -16,6 +16,20 @@
                 <Setter Property="Padding" Value="0"/>
                 <Setter Property="Focusable" Value="False"/>
                 <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Cursor" Value="Hand"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
         </Grid.Resources>
         <Grid VerticalAlignment="Top" Height="20">
@@ -114,20 +128,63 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Margin="6" Click="Event_Previous" ToolTip="이전 곡">
-                <Image Source="Resources\previous.png"/>
+            <Button Grid.Column="0" Margin="6" Click="Event_Previous" ToolTip="이전 곡" HorizontalContentAlignment="Center">
+                <Canvas Height="100" Width="100" Background="Transparent" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.18" ScaleY="0.18"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                    <Rectangle Fill="#C8C2B6" Height="90" Canvas.Left="10" Canvas.Top="5" Width="15"/>
+                    <Path Data="M95,5 L15,50 95,95" Fill="#C8C2B6" Height="90" Canvas.Left="25" Stretch="Fill" Canvas.Top="5" Width="65"/>
+                </Canvas>
             </Button>
             <Button Grid.Column="1" Margin="6" Click="Event_Stop" ToolTip="정지">
-                <Image Source="Resources\stop.png"/>
+                <Rectangle Width="18" Height="18" Fill="#C8C2B6"/>
             </Button>
             <Button Grid.Column="2" Margin="0" Click="Event_Play" ToolTip="재생">
-                <Image Source="Resources\play.png"/>
+                <Canvas Height="100" Width="100" Background="Transparent"  RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.3" ScaleY="0.3"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                    <Path Data="M5,5 L5,95 85,50" Fill="#C8C2B6" Height="100" Canvas.Left="10" Stretch="Fill" Width="80"/>
+                </Canvas>
             </Button>
             <Button Grid.Column="3" Margin="6" Click="Event_Pause" ToolTip="일시 정지">
-                <Image Source="Resources\pause.png"/>
+                <Canvas Height="100" Width="100" Background="Transparent" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.18" ScaleY="0.18"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                    <Rectangle Fill="#C8C2B6" Height="100" Canvas.Left="10" Width="30"/>
+                    <Rectangle Fill="#C8C2B6" Height="100" Canvas.Left="60" Width="30"/>
+                </Canvas>
             </Button>
             <Button Grid.Column="4" Margin="6" Click="Event_Next" ToolTip="다음 곡">
-                <Image Source="Resources\next.png"/>
+                <Canvas Height="100" Width="100" Background="Transparent" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.18" ScaleY="0.18"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                    <Path Data="M5,5 L5,95 85,50" Fill="#C8C2B6" Height="90" Canvas.Left="10" Stretch="Fill" Width="65" Canvas.Top="5"/>
+                    <Rectangle Fill="#C8C2B6" Height="90" Canvas.Left="75" StrokeThickness="0" Canvas.Top="5" Width="15"/>
+                </Canvas>
             </Button>
         </Grid>
 

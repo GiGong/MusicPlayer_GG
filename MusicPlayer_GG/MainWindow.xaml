@@ -12,7 +12,7 @@
         x:Class="MusicPlayer_GG.MainWindow"
         mc:Ignorable="d"
         Title="MusicPlayer_GG" Height="600" Width="450" MinWidth="450" MinHeight="350"
-        WindowStyle="None" ResizeMode="CanResize"
+        WindowStyle="None" ResizeMode="CanResize" 
         Loaded="Window_Loaded" Closing="Window_Closing" LocationChanged="Window_LocationChanged" StateChanged="Window_StateChanged"
         FontFamily="Fonts/#NanumGothic"
     >
@@ -24,6 +24,9 @@
             <Setter Property="Foreground" Value="White"/>
         </Style>
     </Window.Resources>
+    <WindowChrome.WindowChrome>
+        <WindowChrome ResizeBorderThickness="5" CaptionHeight="0"/>
+    </WindowChrome.WindowChrome>
     <Border Name="main" BorderThickness="1" BorderBrush="Black" Margin="0" Background="#FF434B56" >
         <DockPanel>
             <Border Name="border" DockPanel.Dock="Top" Height="35" VerticalAlignment="Top" Background="Transparent">
