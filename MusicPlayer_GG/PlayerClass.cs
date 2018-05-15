@@ -123,6 +123,36 @@ namespace MusicPlayer_GG
 
         public static int PlayingIndex { get; private set; }
 
+        /* 재생 목록 임의 재생 시 임의적으로 순서를 만들어서 그 순서대로 재생 -> 임의 재생 시 재생한 곡 다시 재생하지 않게
+         * 위를 위한 Property. 하지만 하지 않기로.
+        public static bool IsShuffle
+        {
+            get => isShuffle;
+            set
+            {
+                isShuffle = value;
+
+                if(value == true)
+                {
+                    shuffleList = Enumerable.Repeat(-1, PlayList.Count).ToList();
+                    for (int i = 0; i < shuffleList.Count; i++)
+                    {
+                        int temp;
+                        while (shuffleList.Contains(temp = rand.Next(0, PlayList.Count))) ;
+                        shuffleList[i] = temp;
+                    }
+
+                    shuffleIndex = shuffleList.IndexOf(PlayingIndex);
+                }
+                else
+                {
+                    shuffleList = null;
+                    shuffleIndex = -1;
+                }
+            }
+        }
+        */
+
         #endregion
 
         #region Events
@@ -366,14 +396,16 @@ namespace MusicPlayer_GG
 
         public static void MediaNext()
         {
-            if (PlayList.Count == 1)
-                return;
-
             MediaStop();
 
             if (isShuffle == true)
             {
-                PlayingIndex = rand.Next(0, PlayList.Count);
+                int temp = 0; // PlayList.Count <= 1 이면 곡은 1개이므로 Index == 0이다.
+                if(PlayList.Count > 1)
+                {
+                    while ((temp = rand.Next(0, PlayList.Count)) == PlayingIndex) ;
+                }
+                PlayingIndex = temp;
             }
             else
             {
@@ -388,14 +420,16 @@ namespace MusicPlayer_GG
 
         public static void MediaPrevious()
         {
-            if (PlayList.Count == 1)
-                return;
-
             MediaStop();
 
             if (isShuffle == true)
             {
-                PlayingIndex = rand.Next(0, PlayList.Count);
+                int temp = 0;
+                if (PlayList.Count > 1)
+                {
+                    while ((temp = rand.Next(0, PlayList.Count)) == PlayingIndex) ;
+                }
+                PlayingIndex = temp;
             }
             else
             {
