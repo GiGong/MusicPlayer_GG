@@ -26,8 +26,7 @@ namespace MusicPlayer_GG
         private static MediaPlayer media = new MediaPlayer();
         private static Random rand = new Random((int)DateTime.Now.Ticks);
         private static double _volume;
-        private static bool isPause, isPlay;
-        // isPlay는 명확히 사용되는 곳이 없으나 제거하기에는 복잡해지기에 우선 유지 - 버전 1 될 시 제거
+        private static bool isPause;
         private static long _position;
 
         public static double Top, Left, Width, Height;
@@ -155,14 +154,13 @@ namespace MusicPlayer_GG
 
         #endregion
 
-        #region Events
+        #region Constructor
 
         static Player()
         {
             Volume = 0.5;
             PlayingIndex = -1;
             isPause = false;
-            isPlay = false;
             isShuffle = false;
             isRepeatOne = false;
             _position = 0;
@@ -178,6 +176,10 @@ namespace MusicPlayer_GG
             LoadSetting();
             LoadPlayList(PlayListPath);
         }
+
+        #endregion
+
+        #region Events
 
         private static void Event_Opened(object sender, EventArgs e)
         {
@@ -361,7 +363,6 @@ namespace MusicPlayer_GG
             media.Play();
             Volume = _volume;
 
-            isPlay = true;
             isPause = false;
 
             Played?.Invoke(media, null);
@@ -372,7 +373,6 @@ namespace MusicPlayer_GG
             if (media.Source != null)
             {
                 media.Stop();
-                isPlay = false;
                 media.Close();
                 Stoped?.Invoke(media, null);
             }
@@ -387,7 +387,6 @@ namespace MusicPlayer_GG
                 else
                 {
                     media.Pause();
-                    isPlay = false;
                     isPause = true;
                     Paused?.Invoke(media, null);
                 }
@@ -401,7 +400,7 @@ namespace MusicPlayer_GG
             if (isShuffle == true)
             {
                 int temp = 0; // PlayList.Count <= 1 이면 곡은 1개이므로 Index == 0이다.
-                if(PlayList.Count > 1)
+                if (PlayList.Count > 1)
                 {
                     while ((temp = rand.Next(0, PlayList.Count)) == PlayingIndex) ;
                 }
@@ -455,7 +454,7 @@ namespace MusicPlayer_GG
             // List<object> writeList = new List<object>() { isPause, isPlay, isShuffle, isRepeatOne, _volume.ToString("F2") };
             // 0.1.3 까지 저장 방식
 
-            List<object> writeList = new List<object>() { isPause, isPlay, isShuffle, isRepeatOne, _volume.ToString("F2"), PlayListPath, Top, Left, Width, Height };
+            List<object> writeList = new List<object>() { isPause, IsMuted, isShuffle, isRepeatOne, _volume.ToString("F2"), PlayListPath, Top, Left, Width, Height };
 
             try
             {
@@ -484,7 +483,7 @@ namespace MusicPlayer_GG
                 }
 
                 isPause = (bool)readList[0];
-                isPlay = (bool)readList[1];
+                IsMuted = (bool)readList[1];
                 isShuffle = (bool)readList[2];
                 isRepeatOne = (bool)readList[3];
 
