@@ -10,36 +10,128 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MusicPlayer_GG"
         mc:Ignorable="d"
-        Title="정보" Height="450" Width="350" ResizeMode="NoResize"
+        Title="정보" Height="450" Width="350" ResizeMode="NoResize" WindowStyle="None"
         Icon="G.ico" FontFamily="Fonts/#NanumGothic" WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded">
-    <Grid Background="WhiteSmoke">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
+        Loaded="Window_Loaded" StateChanged="Window_StateChanged" LocationChanged="Window_LocationChanged"
+        >
+    <Border Name="main" BorderThickness="1" BorderBrush="Black" Margin="0" Background="#FF434B56">
+        <DockPanel>
+            <Border Name="border" DockPanel.Dock="Top" Height="35" VerticalAlignment="Top" Background="Transparent">
+                <!-- Title Bar Area -->
+                <Grid>
+                    <Label Foreground="White" VerticalContentAlignment="Center" Margin="10,0,105,0" PreviewMouseDown="System_MouseDown" PreviewMouseMove="System_MouseMove">
+                        <TextBlock Text="{Binding Title, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" FontSize="13"/>
+                    </Label>
+                    <Grid HorizontalAlignment="Right" Background="Transparent" >
+                        <!-- System Button Area -->
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type Button}" x:Key="systemButton">
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Width" Value="35"/>
+                                <Setter Property="Height" Value="35"/>
+                                <Setter Property="HorizontalAlignment" Value="Right"/>
+                                <Setter Property="VerticalAlignment" Value="Top"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}"  BorderThickness="0">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="Button.IsMouseOver" Value="True">
+                                        <Setter Property="Button.Background" Value="LightGray" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
 
-        <Image Source="Resources\Gigong.png" Height="100" VerticalAlignment="Top" Width="100" Margin="0,40,0,0" Grid.Column="1"/>
+                            <Style TargetType="Line">
+                                <Setter Property="Stroke" Value="White"/>
+                            </Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Stroke" Value="White"/>
+                            </Style>
+                            <Style TargetType="Polyline">
+                                <Setter Property="Stroke" Value="White"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Button Click="Close_Click">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource systemButton}">
+                                    <Style.Triggers>
+                                        <Trigger Property="Button.IsMouseOver" Value="True">
+                                            <Setter Property="Button.Background" Value="Red" />
+                                        </Trigger>
+                                    </Style.Triggers>
 
-        <TextBlock x:Name="textCopyright" TextAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="82,180,0,0" Width="180"/>
+                                </Style>
+                            </Button.Style>
+                            <Canvas Height="25" Width="35">
+                                <Line    
+                                    X1="12" Y1="8" 
+                                    X2="22" Y2="18"
+                                    StrokeThickness="0.75"/>
+                                <Line    
+                                    X1="12" Y1="18"    
+                                    X2="22" Y2="8" 
+                                    StrokeThickness="0.75"/>
+                            </Canvas>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Border>
 
-        <TextBlock x:Name="textVersion" TextAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Text="현재 버전 : v1.2.3" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="82,255,0,0" Width="180"/>
+            <Grid>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="White"/>
+                    </Style>
+                    <Style TargetType="Run">
+                        <Setter Property="Foreground" Value="White"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
 
-        <TextBlock FontSize="13" Width="180" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="82,310,0,0" Grid.ColumnSpan="3">
-            <Run Text="메일 : "/>
+                <Rectangle Fill="#FFE0E0D8" Margin="0,349,0,0" StrokeThickness="0" Grid.ColumnSpan="3" Visibility="Hidden"/>
+
+                <Image Source="Resources\Gigong.png" Height="100" VerticalAlignment="Top" Width="100" Grid.Column="1" Margin="0,30,0,0"/>
+
+                <TextBlock x:Name="textCopyright" FontSize="13" TextAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="82,174,0,0" Width="180"/>
+
+                <TextBlock x:Name="textVersion" FontSize="13" TextAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Text="현재 버전 : v1.2.3" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="82,234,0,0" Width="180"/>
+
+                <TextBlock Text="메일 :" FontSize="14" Width="53" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="40,283,0,0"/>
+                <TextBlock Text="블로그 :" FontSize="14" Width="53" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="40,303,0,0"/>
+                <TextBlock Text="GitHub :" FontSize="14" Width="55" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="40,323,0,0"/>
+
+                <TextBlock FontSize="13" Width="222" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="98,284,0,0" Grid.ColumnSpan="3">
             <Hyperlink Click="Event_Mail">
-                <Run Text="gigong222@gmail.com" Foreground="Black"/>
+                <Run Text="gigong222@gmail.com"/>
             </Hyperlink>
-        </TextBlock>
-        <TextBlock FontSize="13" Width="180" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="82,330,0,0" Grid.ColumnSpan="3">
-            <Run Text="블로그 : "/>
+                </TextBlock>
+                <TextBlock FontSize="13" Width="222" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="98,304,0,0" Grid.ColumnSpan="3">
             <Hyperlink Click="Event_Blog">
-                <Run Text="gigong.cf" Foreground="Black"/>
+                <Run Text="gigong.cf"/>
             </Hyperlink>
-        </TextBlock>
+                </TextBlock>
+                <TextBlock FontSize="13" Width="231" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="98,324,0,0" Grid.ColumnSpan="3">
+            <Hyperlink Click="Event_GitHub">
+                <Run Text="github.com/GiGong/MusicPlayer_GG"/>
+            </Hyperlink>
+                </TextBlock>
 
-        <Button Content="확인" HorizontalAlignment="Left" VerticalAlignment="Top" Width="70" Height="20" Margin="15,375,0,0" Grid.Column="1" Click="Event_OK" IsDefault="True"/>
-
-    </Grid>
+                <Button Content="확인" VerticalAlignment="Top" Height="20" Margin="35,369,35,0" Grid.Column="1" Click="Event_OK" IsDefault="True" 
+                        Foreground="White" Background="Transparent" BorderThickness="0"/>
+            </Grid>
+        </DockPanel>
+    </Border>
 </Window>
