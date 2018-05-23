@@ -582,6 +582,12 @@ namespace MusicPlayer_GG
 
                     PlayingIndex = Convert.ToInt32(readList[countMusic + 1]);
                     _position = Convert.ToInt64(readList[countMusic + 2]);
+
+                    if (PlayingIndex >= PlayList.Count)
+                    {
+                        PlayingIndex = -1;
+                        _position = 0;
+                    }
                 }
             }
             catch (Exception e)
@@ -592,7 +598,9 @@ namespace MusicPlayer_GG
                     return;
                 }
                 else
+                {
                     MessageBox.Show(e.Message, PROGRAM_NAME);
+                }
             }
 
             PlayList_Loaded(PlayList, null);
