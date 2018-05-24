@@ -105,9 +105,10 @@
 
                 <Image Source="Resources\Gigong.png" Height="100" VerticalAlignment="Top" Width="100" Grid.Column="1" Margin="0,30,0,0"/>
 
-                <TextBlock x:Name="textCopyright" FontSize="13" TextAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="82,174,0,0" Width="180"/>
+                <TextBlock x:Name="textCopyright" FontSize="13" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="82,145,82,0"/>
 
-                <TextBlock x:Name="textVersion" FontSize="13" TextAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Text="현재 버전 : v1.2.3" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="82,234,0,0" Width="180"/>
+                <TextBlock x:Name="textVersion" FontSize="13" TextAlignment="Center" TextWrapping="Wrap" Text="현재 버전 : v1.2.3" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="82,254,82,0"/>
+                <TextBlock FontSize="13" TextAlignment="Center" TextWrapping="Wrap" Text="이 프로그램에는 네이버에서 제공한 나눔글꼴이 적용되어 있습니다." VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="40,201,39.8,0"/>
 
                 <TextBlock Text="메일 :" FontSize="14" Width="53" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="40,283,0,0"/>
                 <TextBlock Text="블로그 :" FontSize="14" Width="53" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="40,303,0,0"/>
