@@ -56,7 +56,7 @@
         <Label FontSize="20" FontWeight="Bold" VerticalAlignment="Top" Margin="140,55,20,0">
             <TextBlock x:Name="textTitle" TextTrimming="CharacterEllipsis"/>
         </Label>
-        <Label FontSize="12" FontWeight="Bold" VerticalAlignment="Top" Margin="140,85,20,0">
+        <Label FontSize="14" FontWeight="Bold" VerticalAlignment="Top" Margin="140,85,20,0">
             <TextBlock x:Name="textMusic" TextTrimming="CharacterEllipsis"/>
         </Label>
 

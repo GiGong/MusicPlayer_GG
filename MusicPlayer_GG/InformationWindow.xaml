@@ -11,7 +11,7 @@
         xmlns:local="clr-namespace:MusicPlayer_GG"
         mc:Ignorable="d"
         Title="정보" Height="450" Width="350" ResizeMode="NoResize" WindowStyle="None"
-        Icon="G.ico" FontFamily="Fonts/#NanumGothic" WindowStartupLocation="CenterScreen"
+        Icon="G.ico" FontFamily="Fonts/#NanumGothicLight" WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded" StateChanged="Window_StateChanged" LocationChanged="Window_LocationChanged"
         >
     <Border Name="main" BorderThickness="1" BorderBrush="Black" Margin="0" Background="#FF434B56">
@@ -107,24 +107,24 @@
 
                 <TextBlock x:Name="textCopyright" FontSize="13" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="82,145,82,0"/>
 
-                <TextBlock x:Name="textVersion" FontSize="13" TextAlignment="Center" TextWrapping="Wrap" Text="현재 버전 : v1.2.3" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="82,254,82,0"/>
-                <TextBlock FontSize="13" TextAlignment="Center" TextWrapping="Wrap" Text="이 프로그램에는 네이버에서 제공한 나눔글꼴이 적용되어 있습니다." VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="40,201,39.8,0"/>
+                <TextBlock x:Name="textVersion" FontSize="13" TextAlignment="Center" TextWrapping="Wrap" Text="현재 버전 : v1.2.3" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="82,250,81.8,0"/>
+                <TextBlock FontSize="13" TextAlignment="Center" TextWrapping="Wrap" Text="이 프로그램에는 네이버에서 제공한 나눔글꼴이 적용되어 있습니다." VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="35,200,34.8,0"/>
 
-                <TextBlock Text="메일 :" FontSize="14" Width="53" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="40,283,0,0"/>
-                <TextBlock Text="블로그 :" FontSize="14" Width="53" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="40,303,0,0"/>
-                <TextBlock Text="GitHub :" FontSize="14" Width="55" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="40,323,0,0"/>
+                <TextBlock Text="메일 :" FontSize="14" Width="53" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="40,288,0,0"/>
+                <TextBlock Text="블로그 :" FontSize="14" Width="53" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="40,308,0,0"/>
+                <TextBlock Text="GitHub :" FontSize="14" Width="55" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="40,328,0,0"/>
 
-                <TextBlock FontSize="13" Width="222" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="98,284,0,0" Grid.ColumnSpan="3">
+                <TextBlock FontSize="13" Width="222" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="98,289,0,0" Grid.ColumnSpan="3">
             <Hyperlink Click="Event_Mail">
                 <Run Text="gigong222@gmail.com"/>
             </Hyperlink>
                 </TextBlock>
-                <TextBlock FontSize="13" Width="222" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="98,304,0,0" Grid.ColumnSpan="3">
+                <TextBlock FontSize="13" Width="222" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="98,309,0,0" Grid.ColumnSpan="3">
             <Hyperlink Click="Event_Blog">
                 <Run Text="gigong.cf"/>
             </Hyperlink>
                 </TextBlock>
-                <TextBlock FontSize="13" Width="231" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="98,324,0,0" Grid.ColumnSpan="3">
+                <TextBlock FontSize="13" Width="231" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="98,329,0,0" Grid.ColumnSpan="3">
             <Hyperlink Click="Event_GitHub">
                 <Run Text="github.com/GiGong/MusicPlayer_GG"/>
             </Hyperlink>
