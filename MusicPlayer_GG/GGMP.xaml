@@ -9,7 +9,7 @@
              Width="448" Height="563"
              Loaded="GGMP_Loaded">
     <Grid Background="#FF434B56">
-        <Grid VerticalAlignment="Top" Height="20">
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="200">
             <Menu Background="Transparent" Margin="10,-5,0,0">
                 <Menu.Resources>
                     <Style TargetType="MenuItem">
@@ -49,7 +49,7 @@
         <Label x:Name="lblTime" Content="" FontSize="12" Height="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxWidth="160" Margin="91,210,91,0" VerticalAlignment="Top"/>
         <Label x:Name="lblVol" FontSize="12" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="20,175,0,0" HorizontalAlignment="Left" Width="100" VerticalAlignment="Top"/>
 
-        <Image x:Name="imgEmpty" Source="Resources\Gigong.png" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="20,30,0,0" OpacityMask="#CC000000"/>
+        <Image x:Name="imgEmpty" Source="Resources\Gigong.png" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="20,30,0,0" OpacityMask="#CC000000" Visibility="Hidden"/>
         <Rectangle Fill="White" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="20,30,0,0" Visibility="Hidden"/>
         <Image x:Name="imgArt" HorizontalAlignment="Left" VerticalAlignment="Top" Height="100" Width="100" Margin="20,30,0,0" />
 

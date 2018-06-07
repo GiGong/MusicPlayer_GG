@@ -115,7 +115,7 @@
                     </Grid>
                 </Grid>
             </Border>
-            <Grid x:Name="gridContent" DockPanel.Dock="Bottom" Panel.ZIndex="-1">
+            <Grid x:Name="gridContent" DockPanel.Dock="Bottom">
                 <!-- Content Area -->
                 <local:GGMP x:Name="ggmp" Width="{Binding Width,ElementName=gridContent}" Height="{Binding Height,ElementName=gridContent}"/>
             </Grid>
