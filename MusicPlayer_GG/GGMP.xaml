@@ -12,24 +12,22 @@
         <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="200">
             <Menu Background="Transparent" Margin="10,-5,0,0">
                 <Menu.Resources>
-                    <Style TargetType="MenuItem">
-                        <Setter Property="Foreground" Value="Black"/>
-                    </Style>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource subMenuItem}"/>
                 </Menu.Resources>
-                <MenuItem Header="파일" Style="{StaticResource mainItem}">
+                <MenuItem Header="파일" Style="{StaticResource topMenuItem}">
                     <MenuItem Header="추가" Click="Event_Add" InputGestureText="Insert"/>
                     <MenuItem Header="제거" Click="Event_Delete" InputGestureText="Delete"/>
                     <Separator />
                     <MenuItem Header="종료" Click="Event_Exit" InputGestureText="Alt + F4" />
                 </MenuItem>
-                <MenuItem Header="음악" Style="{StaticResource mainItem}">
+                <MenuItem Header="음악" Style="{StaticResource topMenuItem}">
                     <MenuItem Header="재생" Click="Event_Play" InputGestureText="Enter"/>
                     <MenuItem Header="일시정지" Click="Event_Pause" InputGestureText="Space"/>
                     <MenuItem Header="정지" Click="Event_Stop" InputGestureText="ESC"/>
                     <MenuItem Header="이전곡" Click="Event_Previous" InputGestureText="PageUp"/>
                     <MenuItem Header="다음곡" Click="Event_Next" InputGestureText="PageDown"/>
                 </MenuItem>
-                <MenuItem Header="재생목록" Style="{StaticResource mainItem}">
+                <MenuItem Header="재생목록" Style="{StaticResource topMenuItem}">
                     <MenuItem Header="{Binding PlayListName}" IsEnabled="False"/>
                     <Separator/>
                     <MenuItem Header="새로 만들기" Click="Event_PlayListNew"/>
@@ -38,7 +36,7 @@
                     <MenuItem Header="저장" Click="Event_PlayListSave"/>
                     <MenuItem Header="다른 이름으로 저장" Click="Event_PlayListSaveAs"/>
                 </MenuItem>
-                <MenuItem Header="지원" Style="{StaticResource mainItem}">
+                <MenuItem Header="지원" Style="{StaticResource topMenuItem}">
                     <MenuItem Header="도움말" InputGestureText="F1" IsEnabled="False"/>
                     <Separator />
                     <MenuItem Header="MusicPlayer_GG 정보" Click="Information_Click"/>
