@@ -6,6 +6,9 @@
              mc:Ignorable="d" 
              x:Name="control">
     <UserControl.Resources>
+        <Style TargetType="{x:Type ContextMenu}" BasedOn="{StaticResource ggmpContextMenu}"/>
+        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource subMenuItem}"/>
+
         <ContextMenu x:Key="listItemContextMenu">
             <MenuItem Header="재생" Click="Event_Play"/>
             <Separator/>
@@ -35,7 +38,7 @@
                 <Setter Property="ContextMenu" Value="{StaticResource listItemContextMenu}"/>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="BorderBrush" Value="Gray"/>
-                <Setter Property="Padding" Value="2"/>
+                <Setter Property="Padding" Value="7,5"/>
 
                 <EventSetter Event="DragOver" Handler="ListBoxItem_DragOver"/>
                 <EventSetter Event="DragLeave" Handler="ListBoxItem_DragLeave"/>

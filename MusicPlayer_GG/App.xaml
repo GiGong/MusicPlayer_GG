@@ -11,7 +11,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
-        <Style TargetType="MenuItem" x:Key="topMenuItem">
+        <Style TargetType="{x:Type MenuItem}" x:Key="topMenuItem">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -67,8 +67,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <Style TargetType="MenuItem" x:Key="subMenuItem">
+        <Style TargetType="{x:Type MenuItem}" x:Key="subMenuItem">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -115,6 +114,40 @@
                                 <Setter Property="Background" TargetName="templateRoot" Value="#0A000000"/>
                                 <Setter Property="BorderBrush" TargetName="templateRoot" Value="#21000000"/>
                             </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type ContextMenu}" x:Key="ggmpContextMenu">
+            <Setter Property="SnapsToDevicePixels"
+          Value="True" />
+            <Setter Property="OverridesDefaultStyle"
+          Value="True" />
+            <Setter Property="Grid.IsSharedSizeScope"
+          Value="true" />
+            <Setter Property="HasDropShadow"
+          Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContextMenu}">
+                        <Border x:Name="Border"
+                Background="#FF606F82"
+                BorderThickness="1">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="#FFE0E0D8" />
+                            </Border.BorderBrush>
+                            <StackPanel IsItemsHost="True"
+                      KeyboardNavigation.DirectionalNavigation="Cycle" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasDropShadow"
+                   Value="true">
+                                <Setter TargetName="Border"
+                    Property="Padding"
+                    Value="0,3,0,3" />
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -269,7 +302,7 @@
             <Setter Property="Template" Value="{StaticResource TemplatePlay}"/>
         </Style>
 
-        <Style TargetType="Button">
+        <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="Padding" Value="0"/>
