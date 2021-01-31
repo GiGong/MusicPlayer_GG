@@ -5,7 +5,7 @@
 
 MusicPlayer_GG.exe (File Size : 1.58MB) in v0.2.1  
 Program Version : v0.2.1 on 09.16 2018  
-Download Link : <a href="https://drive.google.com/open?id=1QA2t2ONHaDnhSPpr-qJ7PyA3TDH5REG0" target="_blank">Google Drive</a>
+Download Link : <a href="https://drive.google.com/open?id=1QA2t2ONHaDnhSPpr-qJ7PyA3TDH5REG0" target="_blank">Google Drive</a> <a href="https://gigong.tistory.com/attachment/cfile4.uf@99A4B8475B9E484A28BD23.exe" target="_blank">Tistory Blog</a> 
 <br/><br/>
 
 When you run the program and exit, two file is created.  
@@ -16,7 +16,7 @@ One is setting file (setting.gg), the other is default Playlist file (lately.gpl
 If not necessary, delete setting file, playlist files.
 <br/><br/>
 
-Blog Posting is <a href="http://gigong.cf/81" target="_blank">Here</a>
+Blog Posting is <a href="https://gigong.tistory.com/81" target="_blank">Here</a>
 
 *Support Korean*
 
@@ -43,7 +43,7 @@ Target Framework Version : .NET Framework 4.6
 
 
 # Contact
-Blog : <a href="http://gigong.cf" target="_blank">GiGong Blog</a> (Powered by Daum)
+Blog : <a href="https://gigong.tistory.com/" target="_blank">GiGong Blog</a> (Powered by Tistory)
 
 Email : <gigong222@gmail.com>
 
